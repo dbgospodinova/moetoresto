@@ -8,276 +8,14 @@
   <!-- Inter Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --bg: #f6f7fb;
-      --bg-elevated: #ffffff;
-      --fg: #111827;
-      --fg-muted: #6b7280;
-      --accent: #2563eb;
-      --accent-soft: #dbeafe;
-      --border-subtle: #e5e7eb;
-      --input-bg: #f9fafb;
-      --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.08);
-      --error: #b91c1c;
-
-      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    [data-theme="dark"] {
-      --bg: #020617;
-      --bg-elevated: #020617;
-      --fg: #e5e7eb;
-      --fg-muted: #9ca3af;
-      --accent: #60a5fa;
-      --accent-soft: #1d4ed8;
-      --border-subtle: #1f2937;
-      --input-bg: #020617;
-      --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.75);
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: var(--font-body);
-      font-size: 16px;
-      background: radial-gradient(circle at top, rgba(59,130,246,0.1), transparent 55%), var(--bg);
-      color: var(--fg);
-      display: flex;
-      justify-content: center;
-      padding: 16px;
-      line-height: 1.55;
-    }
-
-    @media (max-width: 480px) {
-      body { font-size: 17px; }
-    }
-
-    .shell {
-      max-width: 960px;
-      width: 100%;
-      background: radial-gradient(circle at top right, rgba(96,165,250,0.18), transparent 55%), var(--bg-elevated);
-      border-radius: 24px;
-      box-shadow: var(--shadow-soft);
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    header {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-circle {
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #2563eb, #22c55e);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: 700;
-      color: white;
-      font-size: 20px;
-    }
-
-    .brand-text-title {
-      font-weight: 700;
-      font-size: 20px;
-    }
-
-    .brand-text-sub {
-      font-size: 14px;
-      color: var(--fg-muted);
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .btn {
-      border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      padding: 8px 16px;
-      background: rgba(15,23,42,0.02);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      cursor: pointer;
-      font-weight: 500;
-      color: var(--fg);
-    }
-
-    .btn.active {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: #0b1120;
-    }
-
-    main {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-      gap: 24px;
-    }
-
-    @media (max-width: 840px) {
-      main {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      border-radius: 20px;
-      background: rgba(15,23,42,0.02);
-      border: 1px solid rgba(148,163,184,0.25);
-      padding: 22px 20px 26px;
-      backdrop-filter: blur(12px);
-    }
-
-    .card h2 {
-      margin: 0 0 12px;
-      font-size: 26px;
-      font-weight: 700;
-    }
-
-    .card p {
-      margin: 0 0 8px;
-      font-size: 15px;
-      color: var(--fg-muted);
-    }
-
-    .rate-strip {
-      margin-top: 12px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.04);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 15px;
-      font-weight: 500;
-    }
-
-    .flag-pill {
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.06);
-    }
-
-    .grid-head {
-      display: grid;
-      grid-template-columns: minmax(0, 1.6fr) repeat(2, 1fr);
-      gap: 14px;
-      margin-top: 18px;
-      padding-bottom: 8px;
-      border-bottom: 1px dashed rgba(148,163,184,0.6);
-      font-size: 14px;
-      color: var(--fg-muted);
-      font-weight: 600;
-    }
-
-    .grid-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1.6fr) repeat(2, 1fr);
-      gap: 14px;
-      align-items: center;
-      margin-top: 14px;
-    }
-
-    .row-label-main {
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .row-label-sub {
-      font-size: 14px;
-      color: var(--fg-muted);
-    }
-
-    .field {
-      position: relative;
-    }
-
-    .field input {
-      width: 100%;
-      border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      padding: 12px 14px 12px 34px;
-      font-size: 16px;
-      background: var(--input-bg);
-      color: var(--fg);
-      outline: none;
-      font-weight: 400;
-    }
-
-    .field .prefix {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 14px;
-      color: var(--fg-muted);
-      font-weight: 600;
-    }
-
-    .error-text {
-      color: var(--error);
-      font-size: 14px;
-      margin-top: 6px;
-      display: none;
-      font-weight: 500;
-    }
-
-    .hint {
-      margin-top: 14px;
-      font-size: 14px;
-      color: var(--fg-muted);
-      line-height: 1.5;
-    }
-
-    .info-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .info-body {
-      font-size: 15px;
-      color: var(--fg-muted);
-      line-height: 1.6;
-    }
-
-    footer {
-      margin-top: 6px;
-      font-size: 13px;
-      color: var(--fg-muted);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-  </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
 <div class="shell">
 
+  <!-- HEADER -->
   <header>
     <div class="brand">
       <div class="logo-circle">€</div>
@@ -298,9 +36,10 @@
     </div>
   </header>
 
+  <!-- MAIN CONTENT -->
   <main>
 
-    <!-- CALCULATOR -->
+    <!-- CALCULATOR CARD -->
     <section class="card">
       <h2 data-i18n="calcTitle">Сметка, плащане и баланс</h2>
       <p data-i18n="calcIntro">Попълнете сума за сметка и плащане в евро или левове. Балансът се изчислява автоматично.</p>
@@ -375,17 +114,15 @@
       <div class="info-body" data-i18n="infoBody">
         Официалният валутен курс <strong>не се закръглява или съкращава</strong> при превалутиране.
         Всички суми се преобразуват с пълния курс <strong>1 EUR = 1.95583 BGN</strong>, изписан с пет знака след
-        десетичната запетая. Получените резултати се закръгляват до два знака след запетаята по следното правило:
-        третият знак след десетичната запетая, ако е по-малък от 5, вторият остава непроменен; ако е равен или
-        по-голям от 5, вторият се увеличава с едно. Този калкулатор автоматично прилага тези правила.
+        десетичната запетая. Резултатите се закръгляват до два знака след запетаята чрез третия знак.
       </div>
 
       <!-- MOVED HINT -->
       <div class="hint" style="margin-top:18px;">
         <span data-i18n="hintTitle"><strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.</span>
         <ul>
-          <li data-i18n="hint1">Сумите се закръгляват до 2 знака след запетаята.</li>
-          <li data-i18n="hint2">Третият знак < 5 → вторият остава същият.</li>
+          <li data-i18n="hint1">Сумите се закръгляват до 2 знака.</li>
+          <li data-i18n="hint2">Третият знак &lt; 5 → вторият остава същият.</li>
           <li data-i18n="hint3">Третият знак ≥ 5 → вторият се увеличава с 1.</li>
         </ul>
       </div>
@@ -393,189 +130,15 @@
 
   </main>
 
+  <!-- FOOTER -->
   <footer>
     <div data-i18n="footerLeft">MoeToResto · BGN ⇄ EUR помощ за преходния период</div>
     <div data-i18n="footerRight">Сайт за демонстрация – не заменя официални разяснения.</div>
   </footer>
-
 </div>
 
-<script>
-const RATE = 1.95583;
+<!-- JavaScript -->
+<script src="assets/js/app.js"></script>
 
-const translations = {
-  bg: {
-    appTitle: "BGN ⇄ EUR Калкулатор",
-    appSubtitle: "Сметка, плащане и баланс при фиксиран курс",
-    themeToggle: "Тъмен режим",
-    calcTitle: "Сметка, плащане и баланс",
-    calcIntro: "Попълнете сума за сметка и плащане в евро или левове. Балансът се изчислява автоматично.",
-    rateLabel: "Официален курс:",
-    colOperation: "Операция",
-    rowBill: "Сметка",
-    rowBillSub: "Сума по фактура / дължима сума",
-    rowPayment: "Плащане",
-    rowPaymentSub: "Реално платена сума",
-    rowBalance: "Баланс",
-    rowBalanceSub: "Плащане − Сметка (рестото / оставащо за плащане)",
-    errorText: "Моля, въведете валидни числа.",
-    hintTitle: "<strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.",
-    hint1: "Сумите се закръгляват до 2 знака след запетаята.",
-    hint2: "Третият знак < 5 → вторият остава същият.",
-    hint3: "Третият знак ≥ 5 → вторият се увеличава с 1.",
-    infoTitle: "Правила за закръгляване и фиксиран курс",
-    infoBody:
-      "Официалният валутен курс <strong>не се закръглява или съкращава</strong> при превалутиране. " +
-      "Всички суми се преобразуват с пълния курс <strong>1 EUR = 1.95583 BGN</strong>, изписан с пет знака след " +
-      "десетичната запетая. Получените резултати се закръгляват до два знака след запетаята по следното правило: " +
-      "третият знак ако е <5 → вторият остава непроменен; ако е ≥5 → вторият се увеличава с 1.",
-    footerLeft: "MoeToResto · BGN ⇄ EUR помощ за преходния период",
-    footerRight: "Сайт за демонстрация – не заменя официални разяснения."
-  },
-
-  en: {
-    appTitle: "BGN ⇄ EUR Calculator",
-    appSubtitle: "Bill, payment and balance at the fixed rate",
-    themeToggle: "Dark mode",
-    calcTitle: "Bill, Payment and Balance",
-    calcIntro: "Enter bill and payment amounts in EUR or BGN. The balance is calculated automatically.",
-    rateLabel: "Official rate:",
-    colOperation: "Operation",
-    rowBill: "Bill",
-    rowBillSub: "Invoice amount / amount due",
-    rowPayment: "Payment",
-    rowPaymentSub: "Amount effectively paid",
-    rowBalance: "Balance",
-    rowBalanceSub: "Payment − Bill (change / remaining to pay)",
-    errorText: "Please enter valid numbers.",
-    hintTitle: "<strong>Note:</strong> conversion uses the full rate 1.95583.",
-    hint1: "Amounts are rounded to 2 decimal places.",
-    hint2: "Third decimal < 5 → second stays the same.",
-    hint3: "Third decimal ≥ 5 → second increases by one.",
-    infoTitle: "Rounding rules and fixed rate",
-    infoBody:
-      "The official exchange rate <strong>is not rounded or shortened</strong> during conversion. " +
-      "All amounts are converted using the full rate <strong>1 EUR = 1.95583 BGN</strong>. " +
-      "Results are rounded to two decimals using the third decimal digit.",
-    footerLeft: "MoeToResto · BGN ⇄ EUR helper for the transition period",
-    footerRight: "Demonstration site – does not replace official guidance."
-  }
-};
-
-let currentLang = "bg";
-let lastEdited = { bill: null, payment: null };
-
-function roundHalfUp(v, d = 2) {
-  const f = Math.pow(10, d);
-  return Math.round((v + Number.EPSILON) * f) / f;
-}
-
-function updateLanguage(lang) {
-  currentLang = lang;
-  const dict = translations[lang];
-
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.dataset.i18n;
-    const text = dict[key];
-    if (!text) return;
-    if (text.includes("<")) el.innerHTML = text;
-    else el.textContent = text;
-  });
-
-  document.querySelectorAll(".btn-lang").forEach(btn =>
-    btn.classList.toggle("active", btn.dataset.lang === lang)
-  );
-}
-
-function getNumber(v) {
-  if (v === "" || v === null) return null;
-  const n = Number(v);
-  return Number.isFinite(n) ? n : null;
-}
-
-function recalc() {
-  const billEurEl = billEur, billBgnEl = billBgn;
-  const payEurEl = payEur, payBgnEl = payBgn;
-  const balEurEl = balEur, balBgnEl = balBgn;
-  const errorEl = errorText;
-
-  errorEl.style.display = "none";
-
-  let billEur = getNumber(billEurEl.value);
-  let billBgn = getNumber(billBgnEl.value);
-  let payEur = getNumber(payEurEl.value);
-  let payBgn = getNumber(payBgnEl.value);
-
-  if (lastEdited.bill === "eur" && billEur !== null) {
-    billBgn = roundHalfUp(billEur * RATE);
-    billBgnEl.value = billBgn.toFixed(2);
-  }
-  if (lastEdited.bill === "bgn" && billBgn !== null) {
-    billEur = roundHalfUp(billBgn / RATE);
-    billEurEl.value = billEur.toFixed(2);
-  }
-
-  if (lastEdited.payment === "eur" && payEur !== null) {
-    payBgn = roundHalfUp(payEur * RATE);
-    payBgnEl.value = payBgn.toFixed(2);
-  }
-  if (lastEdited.payment === "bgn" && payBgn !== null) {
-    payEur = roundHalfUp(payBgn / RATE);
-    payEurEl.value = payEur.toFixed(2);
-  }
-
-  billEur = getNumber(billEurEl.value);
-  payEur = getNumber(payEurEl.value);
-
-  if (billEur === null || payEur === null) {
-    balEurEl.value = "";
-    balBgnEl.value = "";
-    return;
-  }
-
-  const balEur = roundHalfUp(payEur - billEur);
-  const balBgn = roundHalfUp(balEur * RATE);
-
-  balEurEl.value = balEur.toFixed(2);
-  balBgnEl.value = balBgn.toFixed(2);
-}
-
-document.querySelectorAll("input[data-row]").forEach(input =>
-  input.addEventListener("input", e => {
-    lastEdited[e.target.dataset.row] = e.target.dataset.currency;
-    recalc();
-  })
-);
-
-document.querySelectorAll(".btn-lang").forEach(btn =>
-  btn.addEventListener("click", () => updateLanguage(btn.dataset.lang))
-);
-
-function applyTheme(theme) {
-  document.documentElement.setAttribute("data-theme", theme);
-
-  const icon = themeIcon;
-  const label = document.querySelector('[data-i18n="themeToggle"]');
-
-  if (theme === "dark") {
-    icon.textContent = "☀️";
-    label.textContent = currentLang === "bg" ? "Светъл режим" : "Light mode";
-  } else {
-    icon.textContent = "🌙";
-    label.textContent = currentLang === "bg" ? "Тъмен режим" : "Dark mode";
-  }
-}
-
-const savedTheme = localStorage.getItem("theme") || "light";
-applyTheme(savedTheme);
-
-themeToggle.addEventListener("click", () => {
-  const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  localStorage.setItem("theme", next);
-  applyTheme(next);
-});
-
-updateLanguage("bg");
-</script>
 </body>
 </html>
