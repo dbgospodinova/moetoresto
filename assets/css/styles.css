@@ -23,7 +23,9 @@
   --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.75);
 }
 
-* { box-sizing: border-box; }
+* { 
+  box-sizing: border-box; 
+}
 
 body {
   margin: 0;
@@ -67,9 +69,16 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
+
 .brand-text-sub {
   font-size: 14px;
   color: var(--fg-muted);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .btn {
@@ -79,6 +88,7 @@ body {
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  background: rgba(15,23,42,0.02);
 }
 
 .btn.active {
@@ -101,6 +111,14 @@ body {
   margin: 0 0 12px;
 }
 
+.card p {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--fg-muted);
+}
+
+/* Rate Strip */
+
 .rate-strip {
   margin-top: 12px;
   padding: 8px 12px;
@@ -111,6 +129,12 @@ body {
   gap: 10px;
   font-size: 15px;
   font-weight: 500;
+}
+
+.flag-pill {
+  padding: 3px 8px;
+  background: rgba(15,23,42,0.08);
+  border-radius: 999px;
 }
 
 /* Grid */
@@ -136,12 +160,13 @@ body {
   font-size: 16px;
   font-weight: 600;
 }
+
 .row-label-sub {
   color: var(--fg-muted);
   font-size: 14px;
 }
 
-/* Inputs */
+/* Input Fields */
 
 .field {
   position: relative;
@@ -161,16 +186,41 @@ body {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--fg-muted);
   font-weight: 600;
+  color: var(--fg-muted);
 }
 
-/* Hint */
+/* Error */
 
-.hint {
+.error-text {
+  color: var(--error);
   font-size: 14px;
+  margin-top: 6px;
+  display: none;
+  font-weight: 500;
+}
+
+/* RULES SECTION (MINIMIZED) */
+
+.info-title {
+  font-size: 16px;      /* reduced from 18px */
+  font-weight: 600;     /* reduced boldness */
+  margin-bottom: 8px;
+}
+
+.info-body {
+  font-size: 14px;      /* reduced from 15px */
+  line-height: 1.5;     /* slightly tighter */
   color: var(--fg-muted);
-  margin-top: 18px;
+}
+
+/* Moved Hint Block */
+
+.card .hint {
+  font-size: 13px;       /* reduced from 14px */
+  margin-top: 14px;
+  line-height: 1.45;
+  color: var(--fg-muted);
 }
 
 /* Footer */
@@ -178,6 +228,7 @@ body {
 footer {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   font-size: 13px;
   color: var(--fg-muted);
 }
