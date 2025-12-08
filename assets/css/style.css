@@ -12,16 +12,18 @@
 }
 
 [data-theme="dark"] {
-  --bg: #020617;
-  --bg-elevated: #0a0f1f;
-  --fg: #e5e7eb;
+  --bg: #0a0f1f;
+  --bg-elevated: #111827;
+  --fg: #f1f5f9;
   --fg-muted: #94a3b8;
   --accent: #60a5fa;
   --accent-soft: #1e3a8a;
-  --border-subtle: #1e293b;
-  --input-bg: #0f172a;
+  --border-subtle: #1f2937;
+  --input-bg: #1e293b;
   --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.55);
 }
+
+/* GLOBAL */
 
 * {
   box-sizing: border-box;
@@ -30,12 +32,11 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   background: var(--bg);
-  padding: 16px;
   color: var(--fg);
-  line-height: 1.55;
+  padding: 16px;
 }
 
 .shell {
@@ -43,8 +44,8 @@ body {
   margin: auto;
   background: var(--bg-elevated);
   border-radius: 24px;
-  box-shadow: var(--shadow-soft);
   padding: 28px;
+  box-shadow: var(--shadow-soft);
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -86,17 +87,29 @@ body {
   padding: 8px 16px;
   border-radius: 999px;
   border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  color: var(--fg);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  background: var(--bg-elevated);
-  color: var(--fg);
 }
 
 .btn.active {
   background: var(--accent-soft);
   border-color: var(--accent);
   color: var(--fg);
+}
+
+/* DARK MODE BUTTON FIX */
+[data-theme="dark"] .btn {
+  background: var(--bg-elevated) !important;
+  color: var(--fg) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+[data-theme="dark"] .btn.active {
+  background: var(--accent-soft) !important;
+  color: var(--fg) !important;
 }
 
 /* CARD */
@@ -106,7 +119,6 @@ body {
   padding: 22px 20px 26px;
   background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
-  color: var(--fg);
 }
 
 .card h2 {
@@ -195,10 +207,15 @@ body {
   border-color: var(--accent);
 }
 
-/* Fix autofill */
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
-  -webkit-text-fill-color: var(--fg) !important;
+/* DARK MODE FIX FOR INPUTS */
+[data-theme="dark"] .field input {
+  background: var(--input-bg) !important;
+  color: var(--fg) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+.field input::placeholder {
+  color: var(--fg-muted);
 }
 
 .field .prefix {
@@ -220,7 +237,7 @@ input:-webkit-autofill {
   font-weight: 500;
 }
 
-/* RULES SECTION — MINIMIZED */
+/* RULES – MINIMIZED */
 
 .info-title {
   font-size: 16px;
@@ -231,8 +248,8 @@ input:-webkit-autofill {
 
 .info-body {
   font-size: 14px;
-  color: var(--fg-muted);
   line-height: 1.5;
+  color: var(--fg-muted);
 }
 
 .card .hint {
