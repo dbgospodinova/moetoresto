@@ -23,8 +23,8 @@
   --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.75);
 }
 
-* { 
-  box-sizing: border-box; 
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -50,7 +50,7 @@ body {
   gap: 24px;
 }
 
-/* Header */
+/* HEADER */
 
 .logo-circle {
   width: 44px;
@@ -96,7 +96,7 @@ body {
   border-color: var(--accent);
 }
 
-/* Cards */
+/* CARD */
 
 .card {
   border-radius: 20px;
@@ -117,7 +117,7 @@ body {
   color: var(--fg-muted);
 }
 
-/* Rate Strip */
+/* RATE STRIP */
 
 .rate-strip {
   margin-top: 12px;
@@ -137,7 +137,7 @@ body {
   border-radius: 999px;
 }
 
-/* Grid */
+/* GRID */
 
 .grid-head {
   display: grid;
@@ -166,7 +166,7 @@ body {
   font-size: 14px;
 }
 
-/* Input Fields */
+/* INPUT FIELDS */
 
 .field {
   position: relative;
@@ -190,7 +190,7 @@ body {
   color: var(--fg-muted);
 }
 
-/* Error */
+/* ERROR MESSAGE */
 
 .error-text {
   color: var(--error);
@@ -200,30 +200,29 @@ body {
   font-weight: 500;
 }
 
-/* RULES SECTION (MINIMIZED) */
+/* RULES SECTION — MINIMIZED (ONLY THESE 3 CHANGES) */
 
 .info-title {
-  font-size: 16px;      /* reduced from 18px */
-  font-weight: 600;     /* reduced boldness */
+  font-size: 16px;     /* reduced from 18px */
+  font-weight: 600;
   margin-bottom: 8px;
 }
 
 .info-body {
-  font-size: 14px;      /* reduced from 15px */
-  line-height: 1.5;     /* slightly tighter */
+  font-size: 14px;     /* reduced from 15px */
   color: var(--fg-muted);
+  line-height: 1.5;
 }
 
-/* Moved Hint Block */
-
+/* hint under rules section */
 .card .hint {
-  font-size: 13px;       /* reduced from 14px */
-  margin-top: 14px;
+  font-size: 13px;     /* reduced from 14px */
+  margin-top: 18px;
   line-height: 1.45;
   color: var(--fg-muted);
 }
 
-/* Footer */
+/* FOOTER */
 
 footer {
   display: flex;
