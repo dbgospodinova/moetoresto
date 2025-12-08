@@ -13,17 +13,15 @@
 
 [data-theme="dark"] {
   --bg: #020617;
-  --bg-elevated: #020617;
+  --bg-elevated: #0a0f1f;
   --fg: #e5e7eb;
-  --fg-muted: #9ca3af;
+  --fg-muted: #94a3b8;
   --accent: #60a5fa;
-  --accent-soft: #1d4ed8;
-  --border-subtle: #1f2937;
-  --input-bg: #020617;
-  --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.75);
+  --accent-soft: #1e3a8a;
+  --border-subtle: #1e293b;
+  --input-bg: #0f172a;
+  --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.55);
 }
-
-/* GLOBAL */
 
 * {
   box-sizing: border-box;
@@ -70,6 +68,7 @@ body {
 .brand-text-title {
   font-size: 20px;
   font-weight: 700;
+  color: var(--fg);
 }
 
 .brand-text-sub {
@@ -90,12 +89,14 @@ body {
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  background: rgba(15,23,42,0.02);
+  background: var(--bg-elevated);
+  color: var(--fg);
 }
 
 .btn.active {
   background: var(--accent-soft);
   border-color: var(--accent);
+  color: var(--fg);
 }
 
 /* CARD */
@@ -103,14 +104,16 @@ body {
 .card {
   border-radius: 20px;
   padding: 22px 20px 26px;
-  background: rgba(15,23,42,0.02);
-  border: 1px solid rgba(148,163,184,0.25);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--fg);
 }
 
 .card h2 {
   font-size: 26px;
   font-weight: 700;
   margin: 0 0 12px;
+  color: var(--fg);
 }
 
 .card p {
@@ -124,19 +127,21 @@ body {
 .rate-strip {
   margin-top: 12px;
   padding: 8px 12px;
-  background: rgba(15,23,42,0.05);
+  background: var(--input-bg);
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
   font-size: 15px;
   font-weight: 500;
+  color: var(--fg);
 }
 
 .flag-pill {
   padding: 3px 8px;
-  background: rgba(15,23,42,0.08);
+  background: var(--border-subtle);
   border-radius: 999px;
+  color: var(--fg);
 }
 
 /* GRID */
@@ -147,7 +152,7 @@ body {
   font-weight: 600;
   color: var(--fg-muted);
   padding-bottom: 8px;
-  border-bottom: 1px dashed rgba(148,163,184,0.5);
+  border-bottom: 1px dashed var(--border-subtle);
   margin-top: 18px;
 }
 
@@ -161,11 +166,12 @@ body {
 .row-label-main {
   font-size: 16px;
   font-weight: 600;
+  color: var(--fg);
 }
 
 .row-label-sub {
-  color: var(--fg-muted);
   font-size: 14px;
+  color: var(--fg-muted);
 }
 
 /* INPUT FIELDS */
@@ -180,7 +186,19 @@ body {
   border-radius: 999px;
   border: 1px solid var(--border-subtle);
   background: var(--input-bg);
+  color: var(--fg);
   font-size: 16px;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Fix autofill */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+  -webkit-text-fill-color: var(--fg) !important;
 }
 
 .field .prefix {
@@ -205,19 +223,20 @@ body {
 /* RULES SECTION — MINIMIZED */
 
 .info-title {
-  font-size: 16px;    /* was 18px */
-  font-weight: 600;   /* kept strong but softer */
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 8px;
+  color: var(--fg);
 }
 
 .info-body {
-  font-size: 14px;     /* was 15px */
+  font-size: 14px;
   color: var(--fg-muted);
   line-height: 1.5;
 }
 
 .card .hint {
-  font-size: 13px;     /* was 14px */
+  font-size: 13px;
   margin-top: 18px;
   line-height: 1.45;
   color: var(--fg-muted);
