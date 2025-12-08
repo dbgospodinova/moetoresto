@@ -23,6 +23,8 @@
   --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.75);
 }
 
+/* GLOBAL */
+
 * {
   box-sizing: border-box;
 }
@@ -190,7 +192,7 @@ body {
   color: var(--fg-muted);
 }
 
-/* ERROR MESSAGE */
+/* ERROR */
 
 .error-text {
   color: var(--error);
@@ -200,23 +202,22 @@ body {
   font-weight: 500;
 }
 
-/* RULES SECTION — MINIMIZED (ONLY THESE 3 CHANGES) */
+/* RULES SECTION — MINIMIZED */
 
 .info-title {
-  font-size: 16px;     /* reduced from 18px */
-  font-weight: 600;
+  font-size: 16px;    /* was 18px */
+  font-weight: 600;   /* kept strong but softer */
   margin-bottom: 8px;
 }
 
 .info-body {
-  font-size: 14px;     /* reduced from 15px */
+  font-size: 14px;     /* was 15px */
   color: var(--fg-muted);
   line-height: 1.5;
 }
 
-/* hint under rules section */
 .card .hint {
-  font-size: 13px;     /* reduced from 14px */
+  font-size: 13px;     /* was 14px */
   margin-top: 18px;
   line-height: 1.45;
   color: var(--fg-muted);
