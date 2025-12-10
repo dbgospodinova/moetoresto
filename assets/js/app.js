@@ -3,43 +3,64 @@ const RATE = 1.95583;
 const translations = {
   bg: {
     appTitle: "BGN ⇄ EUR Калкулатор",
-    appSubtitle: "Сметка, плащане и баланс при фиксиран курс",
-    themeToggle: "Тъмен режим", // text when LIGHT mode is active
-    calcTitle: "Сметка, плащане и баланс",
-    calcIntro: "Попълнете сума за сметка и плащане в евро или левове. Балансът се изчислява автоматично.",
-    rateLabel: "Официален курс:",
+    appSubtitle: "Официален курс: 1 EUR = 1.95583 BGN",
+
+    themeToggle: "Тъмен режим",
+
+    calcTitle: "Сметка, плащане и ресто",
+    calcIntro: "Попълнете сума за сметка и плащане. Рестото се изчислява автоматично.",
+
     colOperation: "Операция",
+
     rowBill: "Сметка",
-    rowBillSub: "Сума по фактура / дължима сума",
+    rowBillSub: "Дължима сума",
+
     rowPayment: "Плащане",
     rowPaymentSub: "Реално платена сума",
-    rowBalance: "Баланс",
-    rowBalanceSub: "Плащане − Сметка (рестото / оставащо за плащане)",
+
+    rowBalance: "Ресто",
+    rowBalanceSub: "Плащане − Сметка = Ресто",
+
     errorText: "Моля, въведете валидни числа.",
+
     hintTitle: "<strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.",
     hint1: "Сумите се закръгляват до 2 знака.",
     hint2: "Третият знак < 5 → вторият остава същият.",
-    hint3: "Третият знак ≥ 5 → вторият се увеличава с 1."
+    hint3: "Третият знак ≥ 5 → вторият се увеличава с 1.",
+
+    footerLeft: "MoeToResto · BGN ⇄ EUR помощ за преходния период",
+    footerRight: "Сайт за взаимопомощ – не заменя официални разяснения."
   },
+
   en: {
     appTitle: "BGN ⇄ EUR Calculator",
-    appSubtitle: "Bill, payment and balance at the fixed rate",
+    appSubtitle: "Official rate: 1 EUR = 1.95583 BGN",
+
     themeToggle: "Dark mode",
-    calcTitle: "Bill, Payment and Balance",
-    calcIntro: "Enter bill and payment amounts in EUR or BGN. The balance is calculated automatically.",
-    rateLabel: "Official rate:",
+
+    calcTitle: "Bill, Payment and Change",
+    calcIntro: "Enter bill and payment amounts. Change is calculated automatically.",
+
     colOperation: "Operation",
+
     rowBill: "Bill",
-    rowBillSub: "Invoice amount / amount due",
+    rowBillSub: "Amount due",
+
     rowPayment: "Payment",
-    rowPaymentSub: "Amount effectively paid",
-    rowBalance: "Balance",
-    rowBalanceSub: "Payment − Bill (change / remaining to pay)",
+    rowPaymentSub: "Amount paid",
+
+    rowBalance: "Change",
+    rowBalanceSub: "Payment − Bill = Change",
+
     errorText: "Please enter valid numbers.",
+
     hintTitle: "<strong>Note:</strong> conversion uses the full rate 1.95583.",
-    hint1: "Amounts are rounded to 2 decimals.",
-    hint2: "Third decimal < 5 → second remains the same.",
-    hint3: "Third decimal ≥ 5 → second increases by 1."
+    hint1: "Amounts round to 2 decimals.",
+    hint2: "Third decimal < 5 → second unchanged.",
+    hint3: "Third decimal ≥ 5 → second increases by 1.",
+
+    footerLeft: "MoeToResto · Helper website for the transition period",
+    footerRight: "Support site – does not replace official explanations."
   }
 };
 
@@ -161,10 +182,10 @@ function applyTheme(theme) {
 
   if (theme === "dark") {
     icon.textContent = "☀️";
-    label.textContent = "Светъл режим"; // show switch to light
+    label.textContent = "Светъл режим";
   } else {
     icon.textContent = "🌙";
-    label.textContent = "Тъмен режим"; // show switch to dark
+    label.textContent = "Тъмен режим";
   }
 }
 
