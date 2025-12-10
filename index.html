@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/moetoresto/assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
@@ -21,7 +21,9 @@
       <div class="logo-circle">€</div>
       <div>
         <div class="brand-text-title" data-i18n="appTitle">BGN ⇄ EUR Калкулатор</div>
-        <div class="brand-text-sub" data-i18n="appSubtitle">Сметка, плащане и баланс при фиксиран курс</div>
+        <div class="brand-text-sub" data-i18n="appSubtitle">
+          Официален курс: 1 EUR = 1.95583 BGN
+        </div>
       </div>
     </div>
 
@@ -41,14 +43,10 @@
 
     <!-- CALCULATOR CARD -->
     <section class="card">
-      <h2 data-i18n="calcTitle">Сметка, плащане и баланс</h2>
-      <p data-i18n="calcIntro">Попълнете сума за сметка и плащане в евро или левове. Балансът се изчислява автоматично.</p>
-
-      <div class="rate-strip">
-        <span class="flag-pill">🇧🇬 + 🇪🇺</span>
-        <span data-i18n="rateLabel">Официален курс:</span>
-        <strong>1 EUR = 1.95583 BGN</strong>
-      </div>
+      <h2 data-i18n="calcTitle">Сметка, плащане и ресто</h2>
+      <p data-i18n="calcIntro">
+        Попълнете сума за сметка и плащане. Рестото се изчислява автоматично.
+      </p>
 
       <div class="grid-head">
         <div data-i18n="colOperation">Операция</div>
@@ -60,7 +58,7 @@
       <div class="grid-row">
         <div>
           <div class="row-label-main" data-i18n="rowBill">Сметка</div>
-          <div class="row-label-sub" data-i18n="rowBillSub">Сума по фактура / дължима сума</div>
+          <div class="row-label-sub" data-i18n="rowBillSub">Дължима сума</div>
         </div>
         <div class="field">
           <span class="prefix">€</span>
@@ -88,11 +86,11 @@
         </div>
       </div>
 
-      <!-- BALANCE -->
+      <!-- BALANCE / CHANGE -->
       <div class="grid-row">
         <div>
-          <div class="row-label-main" data-i18n="rowBalance">Баланс</div>
-          <div class="row-label-sub" data-i18n="rowBalanceSub">Плащане − Сметка (рестото / оставащо за плащане)</div>
+          <div class="row-label-main" data-i18n="rowBalance">Ресто</div>
+          <div class="row-label-sub" data-i18n="rowBalanceSub">Плащане − Сметка = Ресто</div>
         </div>
         <div class="field">
           <span class="prefix">€</span>
@@ -104,7 +102,9 @@
         </div>
       </div>
 
-      <div class="error-text" id="errorText" data-i18n="errorText">Моля, въведете валидни числа.</div>
+      <div class="error-text" id="errorText" data-i18n="errorText">
+        Моля, въведете валидни числа.
+      </div>
     </section>
 
     <!-- RULES CARD -->
@@ -112,13 +112,11 @@
       <div class="info-title" data-i18n="infoTitle">Правила за закръгляване и фиксиран курс</div>
 
       <div class="info-body" data-i18n="infoBody">
-        Официалният валутен курс <strong>не се закръглява или съкращава</strong> при превалутиране.
-        Всички суми се преобразуват с пълния курс <strong>1 EUR = 1.95583 BGN</strong>, изписан с пет знака след
-        десетичната запетая. Резултатите се закръгляват до два знака след запетаята чрез третия знак.
+        Официалният курс <strong>не се закръглява</strong>. Всички суми се преобразуват с пълния курс
+        <strong>1 EUR = 1.95583 BGN</strong>. Резултатите се закръгляват до два знака след запетаята.
       </div>
 
-      <!-- MOVED HINT -->
-      <div class="hint" style="margin-top:18px;">
+      <div class="hint">
         <span data-i18n="hintTitle"><strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.</span>
         <ul>
           <li data-i18n="hint1">Сумите се закръгляват до 2 знака.</li>
@@ -133,12 +131,13 @@
   <!-- FOOTER -->
   <footer>
     <div data-i18n="footerLeft">MoeToResto · BGN ⇄ EUR помощ за преходния период</div>
-    <div data-i18n="footerRight">Сайт за демонстрация – не заменя официални разяснения.</div>
+    <div data-i18n="footerRight">Сайт за взаимопомощ – не заменя официални разяснения.</div>
   </footer>
+
 </div>
 
 <!-- JavaScript -->
-<script src="/moetoresto/assets/js/app.js"></script>
+<script src="assets/js/app.js"></script>
 
 </body>
 </html>
