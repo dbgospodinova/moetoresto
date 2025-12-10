@@ -4,7 +4,7 @@ const translations = {
   bg: {
     appTitle: "BGN ⇄ EUR Калкулатор",
     appSubtitle: "Сметка, плащане и баланс при фиксиран курс",
-    themeToggle: "Тъмен режим",
+    themeToggle: "Тъмен режим", // text when LIGHT mode is active
     calcTitle: "Сметка, плащане и баланс",
     calcIntro: "Попълнете сума за сметка и плащане в евро или левове. Балансът се изчислява автоматично.",
     rateLabel: "Официален курс:",
@@ -46,13 +46,17 @@ const translations = {
 let currentLang = "bg";
 let lastEdited = { bill: null, payment: null };
 
-// Rounding
+/* -------------------------
+      ROUNDING
+-------------------------- */
 function roundHalfUp(v, d = 2) {
   const f = Math.pow(10, d);
   return Math.round((v + Number.EPSILON) * f) / f;
 }
 
-// Translation
+/* -------------------------
+      LANGUAGE SWITCH
+-------------------------- */
 function updateLanguage(lang) {
   currentLang = lang;
   const dict = translations[lang];
@@ -61,7 +65,6 @@ function updateLanguage(lang) {
     const key = el.dataset.i18n;
     const val = dict[key];
     if (!val) return;
-
     if (val.includes("<")) el.innerHTML = val;
     else el.textContent = val;
   });
@@ -71,14 +74,18 @@ function updateLanguage(lang) {
   );
 }
 
-// Helpers
+/* -------------------------
+      NUMBER PARSE
+-------------------------- */
 function getNumber(v) {
   if (v === "" || v === null) return null;
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
 }
 
-// Calculator logic
+/* -------------------------
+      CALCULATOR LOGIC
+-------------------------- */
 function recalc() {
   const billEurEl = document.getElementById("billEur");
   const billBgnEl = document.getElementById("billBgn");
@@ -132,7 +139,9 @@ function recalc() {
   balBgnEl.value = balBgn.toFixed(2);
 }
 
-// Bind inputs
+/* -------------------------
+      INPUT BINDINGS
+-------------------------- */
 document.querySelectorAll("input[data-row]").forEach(input =>
   input.addEventListener("input", e => {
     lastEdited[e.target.dataset.row] = e.target.dataset.currency;
@@ -140,24 +149,37 @@ document.querySelectorAll("input[data-row]").forEach(input =>
   })
 );
 
-// Language switch
-document.querySelectorAll(".btn-lang").forEach(btn =>
-  btn.addEventListener("click", () => updateLanguage(btn.dataset.lang))
-);
+/* -------------------------
+      THEME SWITCH
+-------------------------- */
 
-// Theme switch
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
-  themeIcon.textContent = theme === "dark" ? "☀️" : "🌙";
+
+  const icon = document.getElementById("themeIcon");
+  const label = document.querySelector('#themeToggle span[data-i18n="themeToggle"]');
+
+  if (theme === "dark") {
+    icon.textContent = "☀️";
+    label.textContent = "Светъл режим"; // show switch to light
+  } else {
+    icon.textContent = "🌙";
+    label.textContent = "Тъмен режим"; // show switch to dark
+  }
 }
 
+// Initialize theme from localStorage
 applyTheme(localStorage.getItem("theme") || "light");
 
+// Toggle button behavior
 document.getElementById("themeToggle").addEventListener("click", () => {
-  const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  const current = document.documentElement.getAttribute("data-theme");
+  const next = current === "dark" ? "light" : "dark";
   localStorage.setItem("theme", next);
   applyTheme(next);
 });
 
-// Init
+/* -------------------------
+      LANGUAGE INIT
+-------------------------- */
 updateLanguage("bg");
