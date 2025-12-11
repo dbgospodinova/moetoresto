@@ -88,14 +88,18 @@ function cleanInputValue(raw) {
 
   // allow only ONE decimal point
   const parts = raw.split(".");
-  if (parts.length > 2) return parts[0] + "." + parts.slice(1).join("");
-
-  // limit decimals to max 2
-  if (parts[1] && parts[1].length > 2) {
-    parts[1] = parts[1].slice(0, 2);
+  if (parts.length > 2) {
+    raw = parts[0] + "." + parts.slice(1).join("");
   }
 
-  return parts.join(".");
+  // recompute parts after potential join
+  const p = raw.split(".");
+  if (p[1] && p[1].length > 2) {
+    p[1] = p[1].slice(0, 2);
+    raw = p.join(".");
+  }
+
+  return raw;
 }
 
 function roundHalfUp(v, digits = 2) {
@@ -104,7 +108,7 @@ function roundHalfUp(v, digits = 2) {
 }
 
 function getNumber(v) {
-  if (!v) return null;
+  if (v === "" || v === null) return null;
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
 }
@@ -121,6 +125,7 @@ function recalc() {
   const balBgnEl = document.getElementById("balBgn");
   const warningEl = document.getElementById("changeWarning");
 
+  // Reset warning + negative styling
   warningEl.style.display = "none";
   balEurEl.parentElement.classList.remove("negative");
   balBgnEl.parentElement.classList.remove("negative");
@@ -128,13 +133,13 @@ function recalc() {
   // Clean values BEFORE reading numbers
   billEurEl.value = cleanInputValue(billEurEl.value);
   billBgnEl.value = cleanInputValue(billBgnEl.value);
-  payEurEl.value = cleanInputValue(payEurEl.value);
-  payBgnEl.value = cleanInputValue(payBgnEl.value);
+  payEurEl.value  = cleanInputValue(payEurEl.value);
+  payBgnEl.value  = cleanInputValue(payBgnEl.value);
 
   let billEur = getNumber(billEurEl.value);
   let billBgn = getNumber(billBgnEl.value);
-  let payEur = getNumber(payEurEl.value);
-  let payBgn = getNumber(payBgnEl.value);
+  let payEur  = getNumber(payEurEl.value);
+  let payBgn  = getNumber(payBgnEl.value);
 
   // Sync Bill
   if (lastEdited.bill === "eur" && billEur !== null) {
@@ -154,7 +159,7 @@ function recalc() {
 
   // Re-read after sync
   billEur = getNumber(billEurEl.value);
-  payEur = getNumber(payEurEl.value);
+  payEur  = getNumber(payEurEl.value);
 
   if (billEur === null || payEur === null) {
     balEurEl.value = "";
@@ -177,22 +182,12 @@ function recalc() {
 }
 
 /* ------------------------
-   INPUT HANDLERS
-------------------------- */
-document.querySelectorAll("input[data-row]").forEach(input => {
-  input.addEventListener("input", e => {
-    input.value = cleanInputValue(input.value);  // FIX HERE
-    lastEdited[e.target.dataset.row] = e.target.dataset.currency;
-    recalc();
-  });
-});
-
-/* ------------------------
    THEME
 ------------------------- */
 function updateThemeLabel(theme) {
   const label = document.querySelector('#themeToggle span[data-i18n="themeToggle"]');
-  const icon = document.getElementById("themeIcon");
+  const icon  = document.getElementById("themeIcon");
+  if (!label || !icon) return;
 
   if (theme === "dark") {
     icon.textContent = "☀️";
@@ -210,13 +205,13 @@ function applyTheme(theme) {
 }
 
 document.getElementById("themeToggle").addEventListener("click", () => {
-  const current = document.documentElement.getAttribute("data-theme");
-  const next = current === "dark" ? "light" : "dark";
+  const current = document.documentElement.getAttribute("data-theme") || "light";
+  const next    = current === "dark" ? "light" : "dark";
   applyTheme(next);
 });
 
 /* ------------------------
-   LANGUAGE
+   TRANSLATIONS & LANGUAGE
 ------------------------- */
 function applyTranslations() {
   const dict = translations[currentLang];
@@ -225,17 +220,40 @@ function applyTranslations() {
     const key = el.dataset.i18n;
     const val = dict[key];
     if (!val) return;
-    if (val.includes("<")) el.innerHTML = val;
-    else el.textContent = val;
+
+    if (val.includes("<")) {
+      el.innerHTML = val;
+    } else {
+      el.textContent = val;
+    }
   });
 
-  updateThemeLabel(document.documentElement.getAttribute("data-theme") || "light");
+  // Highlight active language button
+  document.querySelectorAll(".btn-lang").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.lang === currentLang);
+  });
+
+  // Refresh theme label text according to current language
+  const theme = document.documentElement.getAttribute("data-theme") || "light";
+  updateThemeLabel(theme);
 }
 
+// Language switch buttons
 document.querySelectorAll(".btn-lang").forEach(btn => {
   btn.addEventListener("click", () => {
     currentLang = btn.dataset.lang;
     applyTranslations();
+    recalc();
+  });
+});
+
+/* ------------------------
+   INPUT BINDINGS
+------------------------- */
+document.querySelectorAll("input[data-row]").forEach(input => {
+  input.addEventListener("input", e => {
+    input.value = cleanInputValue(input.value);
+    lastEdited[e.target.dataset.row] = e.target.dataset.currency;
     recalc();
   });
 });
