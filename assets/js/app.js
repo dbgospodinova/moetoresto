@@ -31,8 +31,8 @@ const translations = {
     rule3: "Третият знак ≥ 5 → вторият се увеличава с 1.",
     rule4: "При суми в лева е възможна разлика от 0.01 ст. поради закръгляване.",
 
-    footerLeft: "MoeToResto · BGN ⇄ EUR помощ за преходния период",
-    footerRight: "Сайт за взаимопомощ – не заменя официални разяснения.",
+    footerLeft: "MoeToResto · EUR ⇄ BGN помощ за преходния период.",
+    footerRight: "Сайт за взаимопомощ · Не заменя официални разяснения.",
 
     negativeChange: "Ресто е отрицателно. Платената сума не покрива сметката."
   },
@@ -67,8 +67,8 @@ const translations = {
     rule3: "Third decimal ≥ 5 → second increases by 1.",
     rule4: "BGN amounts may differ by 0.01 stotinki due to rounding.",
 
-    footerLeft: "MoeToResto · Helper website for the transition period",
-    footerRight: "Support site – does not replace official explanations.",
+    footerLeft: "MoeToResto · EUR ⇄ BGN helper website for the transition period.",
+    footerRight: "Support site · Does not replace official explanations.",
 
     negativeChange: "Change is negative. Payment does not cover the bill."
   }
