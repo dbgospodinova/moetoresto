@@ -4,7 +4,7 @@
   --fg: #111827;
   --fg-muted: #6b7280;
   --accent: #2563eb;
-  --accent-soft: #dbeafe;
+  --accent-soft: #3b82f6;
   --border-subtle: #e5e7eb;
   --input-bg: #f9fafb;
   --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.08);
@@ -12,15 +12,15 @@
 }
 
 [data-theme="dark"] {
-  --bg: #0a0f1f;
-  --bg-elevated: #111827;
-  --fg: #f1f5f9;
-  --fg-muted: #94a3b8;
+  --bg: #020617;
+  --bg-elevated: #020617;
+  --fg: #e5e7eb;
+  --fg-muted: #9ca3af;
   --accent: #60a5fa;
-  --accent-soft: #1e3a8a;
+  --accent-soft: #1d4ed8;
   --border-subtle: #1f2937;
-  --input-bg: #1e293b;
-  --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.55);
+  --input-bg: #020617;
+  --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.75);
 }
 
 * {
@@ -35,6 +35,8 @@ body {
   color: var(--fg);
   padding: 16px;
 }
+
+/* SHELL */
 
 .shell {
   max-width: 960px;
@@ -80,7 +82,6 @@ header {
 .brand-text-title {
   font-size: 20px;
   font-weight: 700;
-  color: var(--fg);
 }
 
 .brand-text-sub {
@@ -131,29 +132,47 @@ header {
   border: 1px solid var(--border-subtle);
 }
 
-/* GLOBAL EUR | BGN HEADER */
+.card-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.card-subtitle {
+  margin: 0 0 18px;
+  font-size: 15px;
+  color: var(--fg-muted);
+}
+
+/* GLOBAL EUR/BGN HEADER – pill style */
 
 .global-head {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr;
-  font-weight: 600;
-  color: var(--fg-muted);
-  padding-bottom: 10px;
-  border-bottom: 1px dashed var(--border-subtle);
-  margin-bottom: 20px;
+  grid-template-columns: 1fr 1fr;
+  max-width: 260px;
+  margin: 0 auto 24px auto;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--accent-soft);
 }
 
-/* SPACIOUS OPERATION BLOCKS */
+.global-head > div {
+  padding: 6px 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+/* OPERATION BLOCKS */
 
 .operation-block {
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
-.operation-block:last-child {
+.operation-block:last-of-type {
   margin-bottom: 0;
 }
-
-/* LABEL: MAIN + SUB */
 
 .op-label {
   margin-bottom: 10px;
@@ -162,7 +181,6 @@ header {
 .op-main {
   font-size: 17px;
   font-weight: 600;
-  color: var(--fg);
 }
 
 .op-sub {
@@ -191,8 +209,8 @@ header {
   top: 50%;
   transform: translateY(-50%);
   width: 36px;
-  font-weight: 600;
   color: var(--fg-muted);
+  font-weight: 600;
 }
 
 .field input {
@@ -210,15 +228,10 @@ header {
   border-color: var(--accent);
 }
 
-[data-theme="dark"] .field input {
-  background: var(--input-bg);
-  color: var(--fg);
-}
+/* Remove arrows */
 
-/* REMOVE ARROWS */
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -227,7 +240,21 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* ERROR */
+/* NEGATIVE RESTO */
+
+.negative input {
+  border-color: var(--error) !important;
+  color: var(--error) !important;
+}
+
+.change-warning {
+  margin-top: 8px;
+  color: var(--error);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ERROR TEXT */
 
 .error-text {
   margin-top: 6px;
@@ -258,7 +285,7 @@ input[type="number"] {
 
 .hint ul {
   padding-left: 20px;
-  margin-top: 6px;
+  margin: 6px 0 0;
 }
 
 /* FOOTER */
@@ -276,10 +303,6 @@ footer {
 /* RESPONSIVE */
 
 @media (max-width: 640px) {
-  .global-head {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
   .op-inputs {
     grid-template-columns: 1fr;
   }
