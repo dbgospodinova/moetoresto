@@ -37,6 +37,7 @@
   <!-- MAIN -->
   <main>
 
+    <!-- CALCULATOR CARD -->
     <section class="card">
       <h2 data-i18n="calcTitle">Сметка, плащане и ресто</h2>
       <p data-i18n="calcIntro">
@@ -104,19 +105,23 @@
       </div>
     </section>
 
+    <!-- RULES CARD -->
     <section class="card">
-      <div class="info-title">Правила за закръгляване и фиксиран курс</div>
-      <div class="info-body">
+      <div class="info-title" data-i18n="infoTitle">
+        Правила за закръгляване и фиксиран курс
+      </div>
+
+      <div class="info-body" data-i18n="infoBody">
         Официалният курс <strong>не се закръглява</strong>. Всички суми се преобразуват
         по пълния курс <strong>1 EUR = 1.95583 BGN</strong>.
       </div>
 
       <div class="hint">
-        <span><strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.</span>
+        <span data-i18n="hintTitle"><strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.</span>
         <ul>
-          <li>Сумите се закръгляват до 2 знака.</li>
-          <li>Третият знак &lt; 5 → вторият остава същият.</li>
-          <li>Третият знак ≥ 5 → вторият се увеличава с 1.</li>
+          <li data-i18n="hint1">Сумите се закръгляват до 2 знака.</li>
+          <li data-i18n="hint2">Третият знак &lt; 5 → вторият остава същият.</li>
+          <li data-i18n="hint3">Третият знак ≥ 5 → вторият се увеличава с 1.</li>
         </ul>
       </div>
     </section>
@@ -125,12 +130,13 @@
 
   <!-- FOOTER -->
   <footer>
-    <div>MoeToResto · BGN ⇄ EUR помощ за преходния период</div>
-    <div>Сайт за взаимопомощ – не заменя официални разяснения.</div>
+    <div data-i18n="footerLeft">MoeToResto · BGN ⇄ EUR помощ за преходния период</div>
+    <div data-i18n="footerRight">Сайт за взаимопомощ – не заменя официални разяснения.</div>
   </footer>
 
 </div>
 
+<!-- JS -->
 <script src="assets/js/app.js"></script>
 </body>
 </html>
