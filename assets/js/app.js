@@ -38,7 +38,7 @@ const translations = {
   },
 
   en: {
-    appTitle: "EUR ⇄ BGN Calculator,
+    appTitle: "EUR ⇄ BGN Calculator",
     appSubtitle: "Official rate: 1 EUR = 1.95583 BGN",
 
     themeToggle: "Dark mode",
