@@ -36,7 +36,6 @@
 
   <main>
 
-    <!-- MAIN CALCULATOR -->
     <section class="card">
 
       <h2 class="card-title" data-i18n="calcTitle">Сметка, плащане и ресто</h2>
@@ -44,13 +43,13 @@
         Попълнете сума за сметка и плащане. Рестото се изчислява автоматично.
       </p>
 
-      <!-- GLOBAL EUR / BGN HEADER -->
-      <div class="global-head">
-        <div>EUR</div>
-        <div>BGN</div>
+      <!-- SPLIT EUR / BGN HEADER -->
+      <div class="split-head">
+        <div class="head-pill">EUR</div>
+        <div class="head-pill">BGN</div>
       </div>
 
-      <!-- BILL BLOCK -->
+      <!-- BILL -->
       <div class="operation-block">
         <div class="op-label">
           <span class="op-main" data-i18n="rowBill">Сметка</span>
@@ -69,7 +68,7 @@
         </div>
       </div>
 
-      <!-- PAYMENT BLOCK -->
+      <!-- PAYMENT -->
       <div class="operation-block">
         <div class="op-label">
           <span class="op-main" data-i18n="rowPayment">Плащане</span>
@@ -88,7 +87,7 @@
         </div>
       </div>
 
-      <!-- BALANCE BLOCK -->
+      <!-- BALANCE -->
       <div class="operation-block">
         <div class="op-label">
           <span class="op-main" data-i18n="rowBalance">Ресто</span>
@@ -106,7 +105,6 @@
           </div>
         </div>
 
-        <!-- NEGATIVE CHANGE WARNING -->
         <div id="changeWarning" class="change-warning" style="display:none;"></div>
       </div>
 
@@ -115,21 +113,15 @@
       </div>
     </section>
 
-    <!-- RULES SECTION -->
     <section class="card">
-      <div class="info-title" data-i18n="rulesTitle">
-        Правила за закръгляване и фиксиран курс
-      </div>
+      <div class="info-title" data-i18n="rulesTitle">Правила за закръгляване и фиксиран курс</div>
 
       <div class="info-body" data-i18n="rulesBody">
-        Официалният курс <strong>не се закръглява</strong>. Всички суми се преобразуват
-        по пълния курс <strong>1 EUR = 1.95583 BGN</strong>. Резултатите се закръгляват до два знака след десетичната запетая.
+        Официалният курс не се закръглява…
       </div>
 
       <div class="hint">
-        <span data-i18n="rulesNote">
-          <strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.
-        </span>
+        <span data-i18n="rulesNote"><strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.</span>
         <ul>
           <li data-i18n="rule1">Сумите се закръгляват до 2 знака.</li>
           <li data-i18n="rule2">Третият знак &lt; 5 → вторият остава същият.</li>
@@ -141,7 +133,6 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer>
     <div data-i18n="footerLeft">MoeToResto · BGN ⇄ EUR помощ за преходния период</div>
     <div data-i18n="footerRight">Сайт за взаимопомощ – не заменя официални разяснения.</div>
