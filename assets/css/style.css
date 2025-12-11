@@ -114,8 +114,6 @@ header {
   border-color: var(--accent);
 }
 
-/* Ensure good contrast in dark mode for buttons */
-
 [data-theme="dark"] .btn {
   background: var(--bg-elevated);
   color: var(--fg);
@@ -149,7 +147,7 @@ header {
   color: var(--fg-muted);
 }
 
-/* Grid layout for rows */
+/* Grid layout */
 
 .grid-head {
   display: grid;
@@ -184,23 +182,19 @@ header {
   position: relative;
 }
 
-/* Prefix (€, лв.) – fixed width to avoid overlap */
-
 .field .prefix {
   position: absolute;
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  width: 36px;           /* enough for "лв." */
+  width: 36px;
   font-weight: 600;
   color: var(--fg-muted);
 }
 
-/* Extra left padding so text never touches prefix */
-
 .field input {
   width: 100%;
-  padding: 12px 14px 12px 56px;  /* 56px = 36px prefix + some spacing */
+  padding: 12px 14px 12px 56px;
   border-radius: 999px;
   border: 1px solid var(--border-subtle);
   background: var(--input-bg);
@@ -213,12 +207,22 @@ header {
   border-color: var(--accent);
 }
 
-/* Inputs in dark mode */
-
 [data-theme="dark"] .field input {
   background: var(--input-bg);
   color: var(--fg);
   border-color: var(--border-subtle);
+}
+
+/* REMOVE ARROWS FROM NUMBER INPUTS */
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 /* Error text */
@@ -233,7 +237,7 @@ header {
 /* Rules card */
 
 .info-title {
-  font-size: 16px;       /* slightly smaller, as requested */
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 6px;
   color: var(--fg);
@@ -268,7 +272,7 @@ footer {
   gap: 4px 12px;
 }
 
-/* Responsive tweaks */
+/* Responsive */
 
 @media (max-width: 640px) {
   .grid-head,
