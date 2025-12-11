@@ -30,7 +30,17 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Inter", sans-serif;
+
+  /* ✅ Emoji-safe font fallback — FIXES FLAG ISSUE */
+  font-family:
+    "Twemoji Mozilla",
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji",
+    "Inter",
+    sans-serif;
+
   background: var(--bg);
   color: var(--fg);
   padding: 16px;
@@ -120,7 +130,6 @@ header {
   color: #ffffff;
 }
 
-/* Good contrast in dark mode */
 [data-theme="dark"] .btn {
   background: var(--bg-elevated);
   color: var(--fg);
