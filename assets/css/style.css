@@ -36,8 +36,6 @@ body {
   padding: 16px;
 }
 
-/* Shell / Layout */
-
 .shell {
   max-width: 960px;
   margin: 0 auto;
@@ -50,7 +48,7 @@ body {
   gap: 24px;
 }
 
-/* Header */
+/* HEADER */
 
 header {
   display: flex;
@@ -96,7 +94,7 @@ header {
   gap: 10px;
 }
 
-/* Buttons */
+/* BUTTONS */
 
 .btn {
   padding: 8px 16px;
@@ -122,10 +120,9 @@ header {
 
 [data-theme="dark"] .btn.active {
   background: var(--accent-soft);
-  color: var(--fg);
 }
 
-/* Cards */
+/* CARDS */
 
 .card {
   border-radius: 20px;
@@ -134,55 +131,61 @@ header {
   border: 1px solid var(--border-subtle);
 }
 
-.card h2 {
-  margin: 0 0 10px;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--fg);
-}
+/* GLOBAL EUR | BGN HEADER */
 
-.card p {
-  margin: 0 0 12px;
-  font-size: 15px;
-  color: var(--fg-muted);
-}
-
-/* Grid layout */
-
-.grid-head {
+.global-head {
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr;
   font-weight: 600;
   color: var(--fg-muted);
-  padding-bottom: 8px;
+  padding-bottom: 10px;
   border-bottom: 1px dashed var(--border-subtle);
+  margin-bottom: 20px;
 }
 
-.grid-row {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr;
-  gap: 14px;
-  margin-top: 14px;
+/* SPACIOUS OPERATION BLOCKS */
+
+.operation-block {
+  margin-bottom: 32px;
 }
 
-.row-label-main {
-  font-size: 16px;
+.operation-block:last-child {
+  margin-bottom: 0;
+}
+
+/* LABEL: MAIN + SUB */
+
+.op-label {
+  margin-bottom: 10px;
+}
+
+.op-main {
+  font-size: 17px;
   font-weight: 600;
   color: var(--fg);
 }
 
-.row-label-sub {
+.op-sub {
   font-size: 14px;
   color: var(--fg-muted);
+  margin-left: 6px;
 }
 
-/* Fields & Inputs */
+/* INPUT GRID */
+
+.op-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* FIELDS / INPUTS */
 
 .field {
   position: relative;
 }
 
-.field .prefix {
+.prefix {
   position: absolute;
   left: 12px;
   top: 50%;
@@ -210,10 +213,9 @@ header {
 [data-theme="dark"] .field input {
   background: var(--input-bg);
   color: var(--fg);
-  border-color: var(--border-subtle);
 }
 
-/* REMOVE ARROWS FROM NUMBER INPUTS */
+/* REMOVE ARROWS */
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -225,7 +227,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* Error text */
+/* ERROR */
 
 .error-text {
   margin-top: 6px;
@@ -234,13 +236,12 @@ input[type="number"] {
   display: none;
 }
 
-/* Rules card */
+/* RULES */
 
 .info-title {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 6px;
-  color: var(--fg);
 }
 
 .info-body {
@@ -257,10 +258,10 @@ input[type="number"] {
 
 .hint ul {
   padding-left: 20px;
-  margin: 6px 0 0;
+  margin-top: 6px;
 }
 
-/* Footer */
+/* FOOTER */
 
 footer {
   margin-top: 8px;
@@ -272,15 +273,18 @@ footer {
   gap: 4px 12px;
 }
 
-/* Responsive */
+/* RESPONSIVE */
 
 @media (max-width: 640px) {
-  .grid-head,
-  .grid-row {
+  .global-head {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .op-inputs {
     grid-template-columns: 1fr;
   }
 
-  .field .prefix {
+  .prefix {
     left: 14px;
   }
 
