@@ -31,7 +31,7 @@ body {
   margin: 0;
   min-height: 100vh;
 
-  /* ✅ Emoji-safe font fallback — FIXES FLAG ISSUE */
+  /* Emoji-safe fallback */
   font-family:
     "Twemoji Mozilla",
     "Apple Color Emoji",
@@ -81,6 +81,7 @@ header {
 }
 
 .logo-circle {
+  flex: 0 0 44px; /* Never shrink, never stretch – always a circle */
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -93,20 +94,28 @@ header {
   font-size: 20px;
 }
 
+/* Text wrapper to allow proper wrapping */
+.brand-text {
+  min-width: 0;
+}
+
 .brand-text-title {
   font-size: 20px;
   font-weight: 700;
+  white-space: normal;
 }
 
 .brand-text-sub {
   font-size: 14px;
   color: var(--fg-muted);
+  white-space: normal;
 }
 
 .controls {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-left: auto;
 }
 
 /* ---------------------- */
@@ -124,21 +133,33 @@ header {
   cursor: pointer;
 }
 
-.btn.active {
+.btn-lang.active {
   background: var(--accent-soft);
   border-color: var(--accent);
-  color: #ffffff;
+  color: #ffffff; /* Fixed text color */
 }
 
-[data-theme="dark"] .btn {
+.btn-lang:not(.active) {
   background: var(--bg-elevated);
   color: var(--fg);
-  border-color: var(--border-subtle);
 }
 
-[data-theme="dark"] .btn.active {
-  background: var(--accent-soft);
+/* Dark mode fixes */
+[data-theme="dark"] .btn-lang.active {
+  background: var(--accent);
   color: #ffffff;
+}
+
+[data-theme="dark"] .btn-lang:not(.active) {
+  background: var(--bg-elevated);
+  color: var(--fg);
+}
+
+/* Theme button */
+.btn-theme {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* ---------------------- */
