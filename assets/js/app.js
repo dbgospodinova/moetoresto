@@ -90,7 +90,6 @@ function updateLanguage(lang) {
     else el.textContent = val;
   });
 
-  // Update theme toggle text when switching languages
   applyTheme(document.documentElement.getAttribute("data-theme") || "light");
 
   document.querySelectorAll(".btn-lang").forEach(btn =>
@@ -117,9 +116,6 @@ function recalc() {
   const payBgnEl = document.getElementById("payBgn");
   const balEurEl = document.getElementById("balEur");
   const balBgnEl = document.getElementById("balBgn");
-  const errorEl = document.getElementById("errorText");
-
-  errorEl.style.display = "none";
 
   let billEur = getNumber(billEurEl.value);
   let billBgn = getNumber(billBgnEl.value);
@@ -174,31 +170,25 @@ document.querySelectorAll("input[data-row]").forEach(input =>
 );
 
 /* -------------------------
-      DECIMAL RESTRICTION (MAX 2 DIGITS)
+   HARD LIMIT: MAX 2 DECIMALS
 -------------------------- */
 document.querySelectorAll('input[type="number"]').forEach(input => {
-  let lastValid = input.value;
+  input.addEventListener("beforeinput", e => {
+    const text = input.value;
+    const incoming = e.data;
 
-  input.addEventListener("input", () => {
-    const v = input.value;
+    if (e.inputType && e.inputType.startsWith("delete")) return;
 
-    if (!v) {
-      lastValid = "";
+    if (incoming === "." && !text.includes(".")) return;
+
+    if (!text.includes(".")) return;
+
+    const decimals = text.split(".")[1] ?? "";
+
+    if (decimals.length >= 2) {
+      e.preventDefault();
       return;
     }
-
-    const parts = v.split(".");
-    if (parts.length > 2) {
-      input.value = lastValid;
-      return;
-    }
-
-    if (parts[1] && parts[1].length > 2) {
-      input.value = lastValid;
-      return;
-    }
-
-    lastValid = input.value;
   });
 });
 
