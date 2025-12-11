@@ -90,6 +90,9 @@ function updateLanguage(lang) {
     else el.textContent = val;
   });
 
+  // Update theme toggle text when switching languages
+  applyTheme(document.documentElement.getAttribute("data-theme") || "light");
+
   document.querySelectorAll(".btn-lang").forEach(btn =>
     btn.classList.toggle("active", btn.dataset.lang === lang)
   );
@@ -171,9 +174,37 @@ document.querySelectorAll("input[data-row]").forEach(input =>
 );
 
 /* -------------------------
+      DECIMAL RESTRICTION (MAX 2 DIGITS)
+-------------------------- */
+document.querySelectorAll('input[type="number"]').forEach(input => {
+  let lastValid = input.value;
+
+  input.addEventListener("input", () => {
+    const v = input.value;
+
+    if (!v) {
+      lastValid = "";
+      return;
+    }
+
+    const parts = v.split(".");
+    if (parts.length > 2) {
+      input.value = lastValid;
+      return;
+    }
+
+    if (parts[1] && parts[1].length > 2) {
+      input.value = lastValid;
+      return;
+    }
+
+    lastValid = input.value;
+  });
+});
+
+/* -------------------------
       THEME SWITCH
 -------------------------- */
-
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
 
@@ -182,17 +213,15 @@ function applyTheme(theme) {
 
   if (theme === "dark") {
     icon.textContent = "☀️";
-    label.textContent = "Светъл режим";
+    label.textContent = currentLang === "bg" ? "Светъл режим" : "Light mode";
   } else {
     icon.textContent = "🌙";
-    label.textContent = "Тъмен режим";
+    label.textContent = currentLang === "bg" ? "Тъмен режим" : "Dark mode";
   }
 }
 
-// Initialize theme from localStorage
 applyTheme(localStorage.getItem("theme") || "light");
 
-// Toggle button behavior
 document.getElementById("themeToggle").addEventListener("click", () => {
   const current = document.documentElement.getAttribute("data-theme");
   const next = current === "dark" ? "light" : "dark";
@@ -201,6 +230,16 @@ document.getElementById("themeToggle").addEventListener("click", () => {
 });
 
 /* -------------------------
-      LANGUAGE INIT
+      LANGUAGE BUTTONS
+-------------------------- */
+document.querySelectorAll(".btn-lang").forEach(btn =>
+  btn.addEventListener("click", () => {
+    const lang = btn.dataset.lang;
+    updateLanguage(lang);
+  })
+);
+
+/* -------------------------
+      INIT LANGUAGE
 -------------------------- */
 updateLanguage("bg");
