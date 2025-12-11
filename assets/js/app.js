@@ -77,7 +77,26 @@ const translations = {
 let currentLang = "bg";
 let lastEdited = { bill: null, payment: null };
 
-/* ---------- HELPERS ---------- */
+/* ------------------------
+   SAFE NUMBER CLEANING
+------------------------- */
+function cleanInputValue(raw) {
+  if (!raw) return "";
+
+  // remove any minus
+  raw = raw.replace(/-/g, "");
+
+  // allow only ONE decimal point
+  const parts = raw.split(".");
+  if (parts.length > 2) return parts[0] + "." + parts.slice(1).join("");
+
+  // limit decimals to max 2
+  if (parts[1] && parts[1].length > 2) {
+    parts[1] = parts[1].slice(0, 2);
+  }
+
+  return parts.join(".");
+}
 
 function roundHalfUp(v, digits = 2) {
   const f = Math.pow(10, digits);
@@ -85,67 +104,14 @@ function roundHalfUp(v, digits = 2) {
 }
 
 function getNumber(v) {
-  if (v === "" || v === null) return null;
+  if (!v) return null;
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
 }
 
-/* ---------- LANGUAGE ---------- */
-
-function applyTranslations() {
-  const dict = translations[currentLang];
-
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.dataset.i18n;
-    const val = dict[key];
-    if (!val) return;
-    if (val.includes("<")) {
-      el.innerHTML = val;
-    } else {
-      el.textContent = val;
-    }
-  });
-
-  // Sync theme label with language and current theme
-  const theme = document.documentElement.getAttribute("data-theme") || "light";
-  updateThemeLabel(theme);
-
-  // Active lang button
-  document.querySelectorAll(".btn-lang").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.lang === currentLang);
-  });
-}
-
-function updateLanguage(lang) {
-  currentLang = lang;
-  applyTranslations();
-}
-
-/* ---------- THEME ---------- */
-
-function updateThemeLabel(theme) {
-  const label = document.querySelector('#themeToggle span[data-i18n="themeToggle"]');
-  const icon = document.getElementById("themeIcon");
-
-  if (!label || !icon) return;
-
-  if (theme === "dark") {
-    icon.textContent = "☀️";
-    label.textContent = currentLang === "bg" ? "Светъл режим" : "Light mode";
-  } else {
-    icon.textContent = "🌙";
-    label.textContent = currentLang === "bg" ? "Тъмен режим" : "Dark mode";
-  }
-}
-
-function applyTheme(theme) {
-  document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("theme", theme);
-  updateThemeLabel(theme);
-}
-
-/* ---------- CALCULATIONS ---------- */
-
+/* ------------------------
+   FULL RECALCULATION
+------------------------- */
 function recalc() {
   const billEurEl = document.getElementById("billEur");
   const billBgnEl = document.getElementById("billBgn");
@@ -155,10 +121,15 @@ function recalc() {
   const balBgnEl = document.getElementById("balBgn");
   const warningEl = document.getElementById("changeWarning");
 
-  // Reset warning + negative styling
   warningEl.style.display = "none";
   balEurEl.parentElement.classList.remove("negative");
   balBgnEl.parentElement.classList.remove("negative");
+
+  // Clean values BEFORE reading numbers
+  billEurEl.value = cleanInputValue(billEurEl.value);
+  billBgnEl.value = cleanInputValue(billBgnEl.value);
+  payEurEl.value = cleanInputValue(payEurEl.value);
+  payBgnEl.value = cleanInputValue(payBgnEl.value);
 
   let billEur = getNumber(billEurEl.value);
   let billBgn = getNumber(billBgnEl.value);
@@ -166,38 +137,22 @@ function recalc() {
   let payBgn = getNumber(payBgnEl.value);
 
   // Sync Bill
-  if (lastEdited.bill === "eur") {
-    if (billEur === null) {
-      billBgnEl.value = "";
-    } else {
-      billBgnEl.value = roundHalfUp(billEur * RATE).toFixed(2);
-    }
+  if (lastEdited.bill === "eur" && billEur !== null) {
+    billBgnEl.value = roundHalfUp(billEur * RATE).toFixed(2);
   }
-  if (lastEdited.bill === "bgn") {
-    if (billBgn === null) {
-      billEurEl.value = "";
-    } else {
-      billEurEl.value = roundHalfUp(billBgn / RATE).toFixed(2);
-    }
+  if (lastEdited.bill === "bgn" && billBgn !== null) {
+    billEurEl.value = roundHalfUp(billBgn / RATE).toFixed(2);
   }
 
   // Sync Payment
-  if (lastEdited.payment === "eur") {
-    if (payEur === null) {
-      payBgnEl.value = "";
-    } else {
-      payBgnEl.value = roundHalfUp(payEur * RATE).toFixed(2);
-    }
+  if (lastEdited.payment === "eur" && payEur !== null) {
+    payBgnEl.value = roundHalfUp(payEur * RATE).toFixed(2);
   }
-  if (lastEdited.payment === "bgn") {
-    if (payBgn === null) {
-      payEurEl.value = "";
-    } else {
-      payEurEl.value = roundHalfUp(payBgn / RATE).toFixed(2);
-    }
+  if (lastEdited.payment === "bgn" && payBgn !== null) {
+    payEurEl.value = roundHalfUp(payBgn / RATE).toFixed(2);
   }
 
-  // Recalculate balance
+  // Re-read after sync
   billEur = getNumber(billEurEl.value);
   payEur = getNumber(payEurEl.value);
 
@@ -221,66 +176,73 @@ function recalc() {
   }
 }
 
-/* ---------- INPUT BINDINGS ---------- */
-
+/* ------------------------
+   INPUT HANDLERS
+------------------------- */
 document.querySelectorAll("input[data-row]").forEach(input => {
   input.addEventListener("input", e => {
+    input.value = cleanInputValue(input.value);  // FIX HERE
     lastEdited[e.target.dataset.row] = e.target.dataset.currency;
     recalc();
   });
 });
 
-/* ----- Limit decimals to max 2 + prevent negatives on active inputs ----- */
+/* ------------------------
+   THEME
+------------------------- */
+function updateThemeLabel(theme) {
+  const label = document.querySelector('#themeToggle span[data-i18n="themeToggle"]');
+  const icon = document.getElementById("themeIcon");
 
-document.querySelectorAll('input[type="number"]').forEach(input => {
-  // prevent > 2 decimals
-  input.addEventListener("beforeinput", e => {
-    const text = input.value;
-    const incoming = e.data;
+  if (theme === "dark") {
+    icon.textContent = "☀️";
+    label.textContent = currentLang === "bg" ? "Светъл режим" : "Light mode";
+  } else {
+    icon.textContent = "🌙";
+    label.textContent = currentLang === "bg" ? "Тъмен режим" : "Dark mode";
+  }
+}
 
-    // allow deletions and non-character edits
-    if (e.inputType && e.inputType.startsWith("delete")) return;
-    if (incoming === null) return;
-
-    // allow first decimal point
-    if (incoming === "." && !text.includes(".")) return;
-
-    // no dot yet → unlimited integer part
-    if (!text.includes(".")) return;
-
-    const decimals = text.split(".")[1] ?? "";
-    if (decimals.length >= 2) {
-      e.preventDefault();
-    }
-  });
-
-  // prevent negative sign entirely
-  input.addEventListener("input", () => {
-    if (input.value.includes("-")) {
-      input.value = input.value.replace(/-/g, "");
-    }
-  });
-});
-
-/* ---------- THEME TOGGLE ---------- */
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
+  updateThemeLabel(theme);
+}
 
 document.getElementById("themeToggle").addEventListener("click", () => {
-  const current = document.documentElement.getAttribute("data-theme") || "light";
+  const current = document.documentElement.getAttribute("data-theme");
   const next = current === "dark" ? "light" : "dark";
   applyTheme(next);
 });
 
-/* ---------- LANGUAGE BUTTONS ---------- */
+/* ------------------------
+   LANGUAGE
+------------------------- */
+function applyTranslations() {
+  const dict = translations[currentLang];
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    const val = dict[key];
+    if (!val) return;
+    if (val.includes("<")) el.innerHTML = val;
+    else el.textContent = val;
+  });
+
+  updateThemeLabel(document.documentElement.getAttribute("data-theme") || "light");
+}
 
 document.querySelectorAll(".btn-lang").forEach(btn => {
   btn.addEventListener("click", () => {
-    updateLanguage(btn.dataset.lang);
+    currentLang = btn.dataset.lang;
+    applyTranslations();
     recalc();
   });
 });
 
-/* ---------- INIT ---------- */
-
+/* ------------------------
+   INIT
+------------------------- */
 applyTheme(localStorage.getItem("theme") || "light");
-updateLanguage("bg");
+applyTranslations();
 recalc();
