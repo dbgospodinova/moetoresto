@@ -122,27 +122,29 @@ function recalc() {
   let payEur = getNumber(payEurEl.value);
   let payBgn = getNumber(payBgnEl.value);
 
-  // Sync Bill
-  if (lastEdited.bill === "eur" && billEur !== null) {
-    billBgn = roundHalfUp(billEur * RATE);
-    billBgnEl.value = billBgn.toFixed(2);
-  }
-  if (lastEdited.bill === "bgn" && billBgn !== null) {
-    billEur = roundHalfUp(billBgn / RATE);
-    billEurEl.value = billEur.toFixed(2);
+  /* --- BILL SYNC --- */
+  if (lastEdited.bill === "eur") {
+    if (billEur === null) billBgnEl.value = "";
+    else billBgnEl.value = roundHalfUp(billEur * RATE).toFixed(2);
   }
 
-  // Sync Payment
-  if (lastEdited.payment === "eur" && payEur !== null) {
-    payBgn = roundHalfUp(payEur * RATE);
-    payBgnEl.value = payBgn.toFixed(2);
-  }
-  if (lastEdited.payment === "bgn" && payBgn !== null) {
-    payEur = roundHalfUp(payBgn / RATE);
-    payEurEl.value = payEur.toFixed(2);
+  if (lastEdited.bill === "bgn") {
+    if (billBgn === null) billEurEl.value = "";
+    else billEurEl.value = roundHalfUp(billBgn / RATE).toFixed(2);
   }
 
-  // Recalculate balance
+  /* --- PAYMENT SYNC --- */
+  if (lastEdited.payment === "eur") {
+    if (payEur === null) payBgnEl.value = "";
+    else payBgnEl.value = roundHalfUp(payEur * RATE).toFixed(2);
+  }
+
+  if (lastEdited.payment === "bgn") {
+    if (payBgn === null) payEurEl.value = "";
+    else payEurEl.value = roundHalfUp(payBgn / RATE).toFixed(2);
+  }
+
+  /* --- BALANCE CALCULATION --- */
   billEur = getNumber(billEurEl.value);
   payEur = getNumber(payEurEl.value);
 
@@ -178,9 +180,7 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
     const incoming = e.data;
 
     if (e.inputType && e.inputType.startsWith("delete")) return;
-
     if (incoming === "." && !text.includes(".")) return;
-
     if (!text.includes(".")) return;
 
     const decimals = text.split(".")[1] ?? "";
@@ -224,8 +224,7 @@ document.getElementById("themeToggle").addEventListener("click", () => {
 -------------------------- */
 document.querySelectorAll(".btn-lang").forEach(btn =>
   btn.addEventListener("click", () => {
-    const lang = btn.dataset.lang;
-    updateLanguage(lang);
+    updateLanguage(btn.dataset.lang);
   })
 );
 
