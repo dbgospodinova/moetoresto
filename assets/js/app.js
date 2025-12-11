@@ -78,28 +78,20 @@ let currentLang = "bg";
 let lastEdited = { bill: null, payment: null };
 
 /* ------------------------
-   SAFE NUMBER CLEANING
+   CLEAN INPUT (no -, max 2 decimals)
 ------------------------- */
 function cleanInputValue(raw) {
   if (!raw) return "";
 
-  // remove any minus
   raw = raw.replace(/-/g, "");
 
-  // allow only ONE decimal point
   const parts = raw.split(".");
-  if (parts.length > 2) {
-    raw = parts[0] + "." + parts.slice(1).join("");
-  }
+  if (parts.length > 2) raw = parts[0] + "." + parts.slice(1).join("");
 
-  // recompute parts after potential join
   const p = raw.split(".");
-  if (p[1] && p[1].length > 2) {
-    p[1] = p[1].slice(0, 2);
-    raw = p.join(".");
-  }
+  if (p[1] && p[1].length > 2) p[1] = p[1].slice(0, 2);
 
-  return raw;
+  return p.join(".");
 }
 
 function roundHalfUp(v, digits = 2) {
@@ -114,23 +106,22 @@ function getNumber(v) {
 }
 
 /* ------------------------
-   FULL RECALCULATION
+   RECALCULATE EVERYTHING
 ------------------------- */
 function recalc() {
   const billEurEl = document.getElementById("billEur");
   const billBgnEl = document.getElementById("billBgn");
-  const payEurEl = document.getElementById("payEur");
-  const payBgnEl = document.getElementById("payBgn");
-  const balEurEl = document.getElementById("balEur");
-  const balBgnEl = document.getElementById("balBgn");
+  const payEurEl  = document.getElementById("payEur");
+  const payBgnEl  = document.getElementById("payBgn");
+  const balEurEl  = document.getElementById("balEur");
+  const balBgnEl  = document.getElementById("balBgn");
   const warningEl = document.getElementById("changeWarning");
 
-  // Reset warning + negative styling
   warningEl.style.display = "none";
   balEurEl.parentElement.classList.remove("negative");
   balBgnEl.parentElement.classList.remove("negative");
 
-  // Clean values BEFORE reading numbers
+  // Clean before reading
   billEurEl.value = cleanInputValue(billEurEl.value);
   billBgnEl.value = cleanInputValue(billBgnEl.value);
   payEurEl.value  = cleanInputValue(payEurEl.value);
@@ -141,7 +132,40 @@ function recalc() {
   let payEur  = getNumber(payEurEl.value);
   let payBgn  = getNumber(payBgnEl.value);
 
-  // Sync Bill
+  /* -----------------------------------------
+     FIX: If user clears a field → reset all
+  ----------------------------------------- */
+  if (lastEdited.bill === "eur" && billEur === null) {
+    billBgnEl.value = "";
+    balEurEl.value = "";
+    balBgnEl.value = "";
+    return;
+  }
+
+  if (lastEdited.bill === "bgn" && billBgn === null) {
+    billEurEl.value = "";
+    balEurEl.value = "";
+    balBgnEl.value = "";
+    return;
+  }
+
+  if (lastEdited.payment === "eur" && payEur === null) {
+    payBgnEl.value = "";
+    balEurEl.value = "";
+    balBgnEl.value = "";
+    return;
+  }
+
+  if (lastEdited.payment === "bgn" && payBgn === null) {
+    payEurEl.value = "";
+    balEurEl.value = "";
+    balBgnEl.value = "";
+    return;
+  }
+
+  /* ------------------------
+     SYNC EUR ↔ BGN
+  ------------------------- */
   if (lastEdited.bill === "eur" && billEur !== null) {
     billBgnEl.value = roundHalfUp(billEur * RATE).toFixed(2);
   }
@@ -149,7 +173,6 @@ function recalc() {
     billEurEl.value = roundHalfUp(billBgn / RATE).toFixed(2);
   }
 
-  // Sync Payment
   if (lastEdited.payment === "eur" && payEur !== null) {
     payBgnEl.value = roundHalfUp(payEur * RATE).toFixed(2);
   }
@@ -157,7 +180,9 @@ function recalc() {
     payEurEl.value = roundHalfUp(payBgn / RATE).toFixed(2);
   }
 
-  // Re-read after sync
+  /* ------------------------
+     CALCULATE BALANCE
+  ------------------------- */
   billEur = getNumber(billEurEl.value);
   payEur  = getNumber(payEurEl.value);
 
@@ -182,11 +207,23 @@ function recalc() {
 }
 
 /* ------------------------
-   THEME
+   INPUT LISTENERS
+------------------------- */
+document.querySelectorAll("input[data-row]").forEach(input => {
+  input.addEventListener("input", e => {
+    input.value = cleanInputValue(input.value);
+    lastEdited[e.target.dataset.row] = e.target.dataset.currency;
+    recalc();
+  });
+});
+
+/* ------------------------
+   THEME LOGIC
 ------------------------- */
 function updateThemeLabel(theme) {
   const label = document.querySelector('#themeToggle span[data-i18n="themeToggle"]');
   const icon  = document.getElementById("themeIcon");
+
   if (!label || !icon) return;
 
   if (theme === "dark") {
@@ -206,12 +243,12 @@ function applyTheme(theme) {
 
 document.getElementById("themeToggle").addEventListener("click", () => {
   const current = document.documentElement.getAttribute("data-theme") || "light";
-  const next    = current === "dark" ? "light" : "dark";
+  const next = current === "dark" ? "light" : "dark";
   applyTheme(next);
 });
 
 /* ------------------------
-   TRANSLATIONS & LANGUAGE
+   LANGUAGE HANDLING
 ------------------------- */
 function applyTranslations() {
   const dict = translations[currentLang];
@@ -221,39 +258,21 @@ function applyTranslations() {
     const val = dict[key];
     if (!val) return;
 
-    if (val.includes("<")) {
-      el.innerHTML = val;
-    } else {
-      el.textContent = val;
-    }
+    if (val.includes("<")) el.innerHTML = val;
+    else el.textContent = val;
   });
 
-  // Highlight active language button
   document.querySelectorAll(".btn-lang").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.lang === currentLang);
   });
 
-  // Refresh theme label text according to current language
-  const theme = document.documentElement.getAttribute("data-theme") || "light";
-  updateThemeLabel(theme);
+  updateThemeLabel(document.documentElement.getAttribute("data-theme") || "light");
 }
 
-// Language switch buttons
 document.querySelectorAll(".btn-lang").forEach(btn => {
   btn.addEventListener("click", () => {
     currentLang = btn.dataset.lang;
     applyTranslations();
-    recalc();
-  });
-});
-
-/* ------------------------
-   INPUT BINDINGS
-------------------------- */
-document.querySelectorAll("input[data-row]").forEach(input => {
-  input.addEventListener("input", e => {
-    input.value = cleanInputValue(input.value);
-    lastEdited[e.target.dataset.row] = e.target.dataset.currency;
     recalc();
   });
 });
