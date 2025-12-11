@@ -2,7 +2,7 @@ const RATE = 1.95583;
 
 const translations = {
   bg: {
-    appTitle: "BGN ⇄ EUR Калкулатор",
+    appTitle: "EUR ⇄ BGN Калкулатор",
     appSubtitle: "Официален курс: 1 EUR = 1.95583 BGN",
 
     themeToggle: "Тъмен режим",
@@ -38,7 +38,7 @@ const translations = {
   },
 
   en: {
-    appTitle: "BGN ⇄ EUR Calculator",
+    appTitle: "EUR ⇄ BGN Calculator,
     appSubtitle: "Official rate: 1 EUR = 1.95583 BGN",
 
     themeToggle: "Dark mode",
