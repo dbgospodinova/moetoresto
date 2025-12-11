@@ -13,26 +13,30 @@
 
   <!-- HEADER -->
   <header>
-    <div class="brand">
-      <div class="logo-circle">€</div>
-      <div>
-        <div class="brand-text-title" data-i18n="appTitle">BGN ⇄ EUR Калкулатор</div>
-        <div class="brand-text-sub" data-i18n="appSubtitle">
-          Официален курс: 1 EUR = 1.95583 BGN
-        </div>
+  <div class="brand">
+    <div class="logo-circle">€</div>
+
+    <div class="brand-text">
+      <div class="brand-text-title" data-i18n="appTitle">EUR ⇄ BGN Калкулатор</div>
+      <div class="brand-text-sub" data-i18n="appSubtitle">
+        Официален курс: 1 EUR = 1.95583 BGN
       </div>
     </div>
+  </div>
 
-    <div class="controls">
-      <button class="btn btn-lang active" data-lang="bg">🇧🇬 BG</button>
-      <button class="btn btn-lang" data-lang="en">🇪🇺 EN</button>
+  <div class="controls">
+    <!-- LANG BUTTONS (EN FIRST NOW) -->
+    <button class="btn btn-lang" data-lang="en">🇪🇺 EN</button>
+    <button class="btn btn-lang active" data-lang="bg">🇧🇬 BG</button>
 
-      <button class="btn btn-theme" id="themeToggle">
-        <span id="themeIcon">🌙</span>
-        <span data-i18n="themeToggle">Тъмен режим</span>
-      </button>
-    </div>
-  </header>
+    <!-- THEME TOGGLE -->
+    <button class="btn btn-theme" id="themeToggle">
+      <span id="themeIcon">🌙</span>
+      <span data-i18n="themeToggle">Тъмен режим</span>
+    </button>
+  </div>
+</header>
+
 
   <main>
 
