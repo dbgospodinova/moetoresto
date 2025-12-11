@@ -37,67 +37,90 @@
   <!-- MAIN -->
   <main>
 
-    <!-- CALCULATOR CARD -->
+    <!-- OPERATION HEADER -->
     <section class="card">
-      <h2 data-i18n="calcTitle">Сметка, плащане и ресто</h2>
-      <p data-i18n="calcIntro">
-        Попълнете сума за сметка и плащане. Рестото се изчислява автоматично.
-      </p>
 
-      <div class="grid-head">
-        <div data-i18n="colOperation">Операция</div>
-        <div>EUR</div>
-        <div>BGN</div>
-      </div>
+      <!-- 1) BILL -->
+      <div class="operation-block">
 
-      <!-- BILL -->
-      <div class="grid-row">
-        <div>
-          <div class="row-label-main" data-i18n="rowBill">Сметка</div>
-          <div class="row-label-sub" data-i18n="rowBillSub">Дължима сума</div>
+        <!-- Column headers -->
+        <div class="op-head">
+          <div></div>
+          <div>EUR</div>
+          <div>BGN</div>
         </div>
-        <div class="field">
-          <span class="prefix">€</span>
-          <input type="number" id="billEur" data-row="bill" data-currency="eur">
-        </div>
-        <div class="field">
-          <span class="prefix">лв.</span>
-          <input type="number" id="billBgn" data-row="bill" data-currency="bgn">
-        </div>
-      </div>
 
-      <!-- PAYMENT -->
-      <div class="grid-row">
-        <div>
-          <div class="row-label-main" data-i18n="rowPayment">Плащане</div>
-          <div class="row-label-sub" data-i18n="rowPaymentSub">Реално платена сума</div>
+        <!-- Operation label -->
+        <div class="op-label">
+          <span data-i18n="rowBill">Сметка</span>
+          <span class="sub">(<span data-i18n="rowBillSub">Дължима сума</span>)</span>
         </div>
-        <div class="field">
-          <span class="prefix">€</span>
-          <input type="number" id="payEur" data-row="payment" data-currency="eur">
-        </div>
-        <div class="field">
-          <span class="prefix">лв.</span>
-          <input type="number" id="payBgn" data-row="payment" data-currency="bgn">
-        </div>
-      </div>
 
-      <!-- BALANCE -->
-      <div class="grid-row">
-        <div>
-          <div class="row-label-main" data-i18n="rowBalance">Ресто</div>
-          <div class="row-label-sub" data-i18n="rowBalanceSub">
-            Плащане − Сметка = Ресто
+        <!-- Inputs -->
+        <div class="op-inputs">
+          <div class="field">
+            <span class="prefix">€</span>
+            <input type="number" id="billEur" data-row="bill" data-currency="eur" step="any">
+          </div>
+          <div class="field">
+            <span class="prefix">лв.</span>
+            <input type="number" id="billBgn" data-row="bill" data-currency="bgn" step="any">
           </div>
         </div>
-        <div class="field">
-          <span class="prefix">€</span>
-          <input type="text" id="balEur" readonly>
+      </div>
+
+      <!-- 2) PAYMENT -->
+      <div class="operation-block">
+
+        <div class="op-head">
+          <div></div>
+          <div>EUR</div>
+          <div>BGN</div>
         </div>
-        <div class="field">
-          <span class="prefix">лв.</span>
-          <input type="text" id="balBgn" readonly>
+
+        <div class="op-label">
+          <span data-i18n="rowPayment">Плащане</span>
+          <span class="sub">(<span data-i18n="rowPaymentSub">Реално платена сума</span>)</span>
         </div>
+
+        <div class="op-inputs">
+          <div class="field">
+            <span class="prefix">€</span>
+            <input type="number" id="payEur" data-row="payment" data-currency="eur" step="any">
+          </div>
+          <div class="field">
+            <span class="prefix">лв.</span>
+            <input type="number" id="payBgn" data-row="payment" data-currency="bgn" step="any">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 3) BALANCE -->
+      <div class="operation-block">
+
+        <div class="op-head">
+          <div></div>
+          <div>EUR</div>
+          <div>BGN</div>
+        </div>
+
+        <div class="op-label">
+          <span data-i18n="rowBalance">Ресто</span>
+          <span class="sub">(<span data-i18n="rowBalanceSub">Плащане − Сметка = Ресто</span>)</span>
+        </div>
+
+        <div class="op-inputs">
+          <div class="field">
+            <span class="prefix">€</span>
+            <input type="text" id="balEur" readonly>
+          </div>
+          <div class="field">
+            <span class="prefix">лв.</span>
+            <input type="text" id="balBgn" readonly>
+          </div>
+        </div>
+
       </div>
 
       <div class="error-text" id="errorText" data-i18n="errorText">
@@ -136,7 +159,6 @@
 
 </div>
 
-<!-- JS -->
 <script src="assets/js/app.js"></script>
 </body>
 </html>
