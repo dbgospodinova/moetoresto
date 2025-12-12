@@ -133,7 +133,7 @@ function recalc() {
   let payBgn  = getNumber(payBgnEl.value);
 
   /* -----------------------------------------
-     If user clears a field → reset related
+     FIX: If user clears a field → reset all
   ----------------------------------------- */
   if (lastEdited.bill === "eur" && billEur === null) {
     billBgnEl.value = "";
@@ -283,11 +283,3 @@ document.querySelectorAll(".btn-lang").forEach(btn => {
 applyTheme(localStorage.getItem("theme") || "light");
 applyTranslations();
 recalc();
-
-/* ------------------------
-   DYNAMIC YEAR IN FOOTER
-------------------------- */
-const yearEl = document.getElementById("year");
-if (yearEl) {
-  yearEl.textContent = new Date().getFullYear();
-}
