@@ -81,7 +81,7 @@ header {
 }
 
 .logo-circle {
-  flex: 0 0 44px;
+  flex: 0 0 44px; /* Never shrink, never stretch – always a circle */
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -136,7 +136,7 @@ header {
 .btn-lang.active {
   background: var(--accent-soft);
   border-color: var(--accent);
-  color: #ffffff;
+  color: #ffffff; /* Fixed text color */
 }
 
 .btn-lang:not(.active) {
@@ -357,41 +357,9 @@ input[type="number"] {
 footer {
   margin-top: 8px;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 13px;
-}
-
-/* Colored copyright line: white → green → red */
-.footer-colored {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: #020617; /* dark background so white text is visible */
-}
-
-.footer-white {
-  color: #ffffff;
-}
-
-.footer-green {
-  color: #22c55e;
-  font-weight: 600;
-}
-
-.footer-red {
-  color: #dc2626;
-}
-
-/* Note line below */
-.footer-note {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 12px;
   justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 13px;
   color: var(--fg-muted);
+  gap: 4px 12px;
 }
