@@ -363,3 +363,8 @@ footer {
   color: var(--fg-muted);
   gap: 4px 12px;
 }
+
+.footer-note {
+  text-align: center;
+  justify-content: center;
+}
