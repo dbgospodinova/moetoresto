@@ -2,7 +2,7 @@
 <html lang="bg" data-theme="system">
 <head>
   <meta charset="UTF-8" />
-  <title>EUR ⇄ BGN Калкулатор – MoeToResto</title>
+  <title>MoeToResto - EUR ⇄ BGN Калкулатор</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/moetoresto/assets/css/style.css" />
@@ -13,33 +13,33 @@
 
   <!-- HEADER -->
   <header>
-    <div class="brand">
-      <div class="logo-circle">€</div>
+  <div class="brand">
+    <div class="logo-circle">€</div>
 
-      <div class="brand-text">
-        <div class="brand-text-title" data-i18n="appTitle">EUR ⇄ BGN Калкулатор</div>
-        <div class="brand-text-sub" data-i18n="appSubtitle">
-          Официален курс: 1 EUR = 1.95583 BGN
-        </div>
+    <div class="brand-text">
+      <div class="brand-text-title" data-i18n="appTitle">EUR ⇄ BGN Калкулатор</div>
+      <div class="brand-text-sub" data-i18n="appSubtitle">
+        Официален курс: 1 EUR = 1.95583 BGN
       </div>
     </div>
+  </div>
 
-    <div class="controls">
-      <!-- EN first, BG second -->
-      <button class="btn btn-lang" data-lang="en">🇪🇺 EN</button>
-      <button class="btn btn-lang active" data-lang="bg">🇧🇬 BG</button>
+  <div class="controls">
+    <!-- LANG BUTTONS (EN FIRST NOW) -->
+    <button class="btn btn-lang" data-lang="en">🇪🇺 EN</button>
+    <button class="btn btn-lang active" data-lang="bg">🇧🇬 BG</button>
 
-      <button class="btn btn-theme" id="themeToggle">
-        <span id="themeIcon">🌙</span>
-        <span data-i18n="themeToggle">Тъмен режим</span>
-      </button>
-    </div>
-  </header>
+    <!-- THEME TOGGLE -->
+    <button class="btn btn-theme" id="themeToggle">
+      <span id="themeIcon">🌙</span>
+      <span data-i18n="themeToggle">Тъмен режим</span>
+    </button>
+  </div>
+</header>
 
-  <!-- MAIN -->
+
   <main>
 
-    <!-- MAIN CALCULATOR -->
     <section class="card">
 
       <h2 class="card-title" data-i18n="calcTitle">Сметка, плащане и ресто</h2>
@@ -53,7 +53,7 @@
         <div class="head-pill">BGN</div>
       </div>
 
-      <!-- BILL BLOCK -->
+      <!-- BILL -->
       <div class="operation-block">
         <div class="op-label">
           <span class="op-main" data-i18n="rowBill">Сметка</span>
@@ -72,7 +72,7 @@
         </div>
       </div>
 
-      <!-- PAYMENT BLOCK -->
+      <!-- PAYMENT -->
       <div class="operation-block">
         <div class="op-label">
           <span class="op-main" data-i18n="rowPayment">Плащане</span>
@@ -91,7 +91,7 @@
         </div>
       </div>
 
-      <!-- BALANCE BLOCK -->
+      <!-- BALANCE -->
       <div class="operation-block">
         <div class="op-label">
           <span class="op-main" data-i18n="rowBalance">Ресто</span>
@@ -109,7 +109,6 @@
           </div>
         </div>
 
-        <!-- NEGATIVE CHANGE WARNING -->
         <div id="changeWarning" class="change-warning" style="display:none;"></div>
       </div>
 
@@ -118,22 +117,15 @@
       </div>
     </section>
 
-    <!-- RULES SECTION -->
     <section class="card">
-      <div class="info-title" data-i18n="rulesTitle">
-        Правила за закръгляване и фиксиран курс
-      </div>
+      <div class="info-title" data-i18n="rulesTitle">Правила за закръгляване и фиксиран курс</div>
 
       <div class="info-body" data-i18n="rulesBody">
-        Официалният курс не се закръглява. Всички суми се преобразуват
-        по пълния курс 1 EUR = 1.95583 BGN. Резултатите се закръгляват до два
-        знака след десетичната запетая.
+        Официалният курс не се закръглява…
       </div>
 
       <div class="hint">
-        <span data-i18n="rulesNote">
-          <strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.
-        </span>
+        <span data-i18n="rulesNote"><strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.</span>
         <ul>
           <li data-i18n="rule1">Сумите се закръгляват до 2 знака.</li>
           <li data-i18n="rule2">Третият знак &lt; 5 → вторият остава същият.</li>
@@ -145,30 +137,9 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer>
-    <!-- Colored copyright line: white → green → red -->
-    <div class="footer-colored">
-      <span class="footer-white">
-        © <span id="year"></span> MoeToResto
-      </span>
-      <span class="footer-green">
-        • EUR ⇄ BGN Calculator •
-      </span>
-      <span class="footer-red">
-        All rights reserved.
-      </span>
-    </div>
-
-    <!-- Existing note, translated -->
-    <div class="footer-note">
-      <span data-i18n="footerLeft">
-        MoeToResto · EUR ⇄ BGN помощ за преходния период.
-      </span>
-      <span data-i18n="footerRight">
-        Сайт за взаимопомощ · Не заменя официални разяснения.
-      </span>
-    </div>
+    <div data-i18n="footerLeft">MoeToResto · EUR ⇄ BGN помощ за преходния период.</div>
+    <div data-i18n="footerRight">Сайт за взаимопомощ · Не заменя официални разяснения.</div>
   </footer>
 
 </div>
