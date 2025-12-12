@@ -27,12 +27,12 @@ const translations = {
     rulesNote:
       "<strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.",
     rule1: "Сумите се закръгляват до 2 знака.",
-    rule2: "Третият знак &lt; 5 → вторият остава същият.",
+    rule2: "Третият знак < 5 → вторият остава същият.",
     rule3: "Третият знак ≥ 5 → вторият се увеличава с 1.",
     rule4: "При суми в лева е възможна разлика от 0.01 ст. поради закръгляване.",
 
-    footerLeft: "MoeToResto · EUR ⇄ BGN помощ за преходния период.",
-    footerRight: "Сайт за взаимопомощ · Не заменя официални разяснения.",
+    footerCombined:
+    "MoeToResto · EUR ⇄ BGN помощ за преходния период · Не заменя официални разяснения.",
 
     negativeChange: "Ресто е отрицателно. Платената сума не покрива сметката."
   },
@@ -67,8 +67,8 @@ const translations = {
     rule3: "Third decimal ≥ 5 → second increases by 1.",
     rule4: "BGN amounts may differ by 0.01 stotinki due to rounding.",
 
-    footerLeft: "MoeToResto · EUR ⇄ BGN helper website for the transition period.",
-    footerRight: "Support site · Does not replace official explanations.",
+    footerCombined:
+    "MoeToResto · EUR ⇄ BGN helper website for the transition period · Does not replace official explanations.",
 
     negativeChange: "Change is negative. Payment does not cover the bill."
   }
