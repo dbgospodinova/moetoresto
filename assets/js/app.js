@@ -63,7 +63,7 @@ const translations = {
     rulesNote:
       "<strong>Note:</strong> conversion uses the full rate 1.95583.",
     rule1: "Amounts are rounded to 2 decimals.",
-    rule2: "Third decimal &lt; 5 → second stays the same.",
+    rule2: "Third decimal < 5 → second stays the same.",
     rule3: "Third decimal ≥ 5 → second increases by 1.",
     rule4: "BGN amounts may differ by 0.01 stotinki due to rounding.",
 
