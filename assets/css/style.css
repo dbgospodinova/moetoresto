@@ -32,7 +32,7 @@ body {
   min-height: 100vh;
 
   /* Emoji-safe fallback */
-  font-family:
+font-family:
   "Inter",
   system-ui,
   -apple-system,
@@ -45,6 +45,7 @@ body {
   "Segoe UI Emoji",
   "Noto Color Emoji",
   sans-serif;
+
 
   background: var(--bg);
   color: var(--fg);
