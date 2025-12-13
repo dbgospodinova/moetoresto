@@ -270,4 +270,5 @@ function applyTranslations() {
 
     if (val.includes("<")) el.innerHTML = val;
     else el.textContent = val;
+  }
   });
