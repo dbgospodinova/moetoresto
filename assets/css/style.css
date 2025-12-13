@@ -368,3 +368,21 @@ footer {
   text-align: center;
   justify-content: center;
 }
+
+
+/* Fix text selection visibility (Firefox & others) */
+::selection {
+  background: rgba(37, 99, 235, 0.25); /* soft blue */
+  color: var(--fg);
+}
+
+::-moz-selection {
+  background: rgba(37, 99, 235, 0.25);
+  color: var(--fg);
+}
+
+
+.brand-text-sub,
+.brand-text-sub * {
+  user-select: text;
+}
