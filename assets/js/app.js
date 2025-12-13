@@ -29,7 +29,7 @@ const translations = {
     rule1: "Сумите се закръгляват до 2 знака.",
     rule2: "Третият знак < 5 → вторият остава същият.",
     rule3: "Третият знак ≥ 5 → вторият се увеличава с 1.",
-    rule4: "При суми в лева е възможна разлика от 0.01 ст. поради закръгляване.",
+    rule4: "При суми в лева е възможна разлика от 0.01 лв. поради закръгляване.",
 
     footerCombined:
     "MoeToResto · EUR ⇄ BGN помощ за преходния период · Не заменя официални разяснения.",
@@ -65,7 +65,7 @@ const translations = {
     rule1: "Amounts are rounded to 2 decimals.",
     rule2: "Third decimal < 5 → second stays the same.",
     rule3: "Third decimal ≥ 5 → second increases by 1.",
-    rule4: "BGN amounts may differ by 0.01 stotinki due to rounding.",
+    rule4: "BGN amounts may differ by 0.01 лв. due to rounding.",
 
     footerCombined:
     "MoeToResto · EUR ⇄ BGN helper website for the transition period · Does not replace official explanations.",
