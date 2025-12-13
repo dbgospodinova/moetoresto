@@ -30,18 +30,20 @@ html,body{
   min-height:100vh;
 }
 
-body{
+body {
   font-family:
-    "Twemoji Mozilla",
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
     "Apple Color Emoji",
     "Segoe UI Emoji",
-    "Segoe UI Symbol",
     "Noto Color Emoji",
-    "Inter",
     sans-serif;
-  background:var(--bg);
-  color:var(--fg);
-  padding:16px;
 }
 
 /* Layout */
