@@ -16,7 +16,7 @@ const translations = {
     rowBill: "Сметка",
     rowBillSub: "(Дължима сума)",
     decimalExample: "Напр. 12.34",
-    commaError: "Използвайте точка (.) вместо запетая.",
+    inputError: "Моля, въведете число с точка (.) като десетичен разделител.",
 
     rowPayment: "Плащане",
     rowPaymentSub: "(Реално платена сума)",
@@ -52,7 +52,7 @@ const translations = {
     rowBill: "Bill",
     rowBillSub: "(Amount due)",
     decimalExample: "e.g. 12.34",
-    commaError: "Please use dot (.) instead of comma.",
+    inputError: "Please enter a number using dot (.) as decimal separator.",
 
     rowPayment: "Payment",
     rowPaymentSub: "(Amount paid)",
@@ -116,29 +116,63 @@ function getNumber(v) {
 }
 
 /* ========================
-   COMMA BLOCKING
+   INVALID KEYS BLOCKING
 ======================== */
-function showCommaError() {
+function showInputError() {
   const errorEl = document.getElementById("errorText");
   if (!errorEl) return;
-  errorEl.textContent = translations[currentLang].commaError;
+  errorEl.textContent = translations[currentLang].inputError;
   errorEl.style.display = "block";
 }
 
-function blockCommaKey(e) {
+function blockInvalidKeys(e) {
+  const allowedControlKeys = [
+    "Backspace",
+    "Delete",
+    "ArrowLeft",
+    "ArrowRight",
+    "Tab",
+    "Home",
+    "End"
+  ];
+
+  // allow control/navigation keys
+  if (allowedControlKeys.includes(e.key)) return;
+
+  // allow digits
+  if (e.key >= "0" && e.key <= "9") return;
+
+  // allow dot
+  if (e.key === ".") return;
+
+  // block everything else (comma, letters, symbols, minus, space)
+  e.preventDefault();
+
   if (e.key === ",") {
-    e.preventDefault();
-    showCommaError();
+    showInputError();
   }
 }
 
-function blockCommaPaste(e) {
+function blockInvalidPaste(e) {
   const pasted = (e.clipboardData || window.clipboardData).getData("text");
-  if (pasted && pasted.includes(",")) {
+
+  if (!pasted) return;
+
+  // Only digits and dot
+  if (!/^[0-9.]+$/.test(pasted)) {
     e.preventDefault();
-    showCommaError();
+    showInputError();
+    return;
+  }
+
+  // Only ONE dot allowed
+  const dotCount = (pasted.match(/\./g) || []).length;
+  if (dotCount > 1) {
+    e.preventDefault();
+    showInputError();
   }
 }
+
 
 /* ========================
    RECALCULATION
@@ -214,8 +248,8 @@ function recalc() {
    INPUT LISTENERS
 ======================== */
 document.querySelectorAll("input[data-row]").forEach(input => {
-  input.addEventListener("keydown", blockCommaKey);
-  input.addEventListener("paste", blockCommaPaste);
+  input.addEventListener("keydown", blockInvalidKeys);
+  input.addEventListener("paste", blockInvalidPaste);
 
   input.addEventListener("input", e => {
     input.value = cleanInputValue(input.value);
