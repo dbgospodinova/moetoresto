@@ -136,21 +136,35 @@ function recalc() {
 
   // ------------------------
   // CLEANUP: clear paired fields
+  // -----------------------
+
   // ------------------------
-  if (billEurEl.value === "" || billBgnEl.value === "") {
-    billEurEl.value = "";
+  // CLEANUP: clear paired fields only if active field is cleared
+  // ------------------------
+  if (lastEdited.bill === "eur" && billEurEl.value === "") {
     billBgnEl.value = "";
     balEurEl.value = "";
     balBgnEl.value = "";
   }
-  
-  if (payEurEl.value === "" || payBgnEl.value === "") {
-    payEurEl.value = "";
+
+  if (lastEdited.bill === "bgn" && billBgnEl.value === "") {
+    billEurEl.value = "";
+    balEurEl.value = "";
+    balBgnEl.value = "";
+  }
+
+  if (lastEdited.payment === "eur" && payEurEl.value === "") {
     payBgnEl.value = "";
     balEurEl.value = "";
     balBgnEl.value = "";
   }
-  
+
+  if (lastEdited.payment === "bgn" && payBgnEl.value === "") {
+    payEurEl.value = "";
+    balEurEl.value = "";
+    balBgnEl.value = "";
+  }
+
   /* ------------------------
      SYNC EUR ↔ BGN
   ------------------------- */
