@@ -1,4 +1,177 @@
+
+
 <!DOCTYPE html>
+<html lang="bg" data-theme="system">
+<head>
+  <meta charset="UTF-8" />
+  <title>MoeToResto - EUR ⇄ BGN Калкулатор</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+  
+  <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <!-- Primary Meta -->
+  <meta name="title" content="MoeToResto – EUR ⇄ BGN Calculator">
+  <meta name="description" content="Калкулатор за преходния период EUR ⇄ BGN с официалния фиксиран курс 1.95583. Сметка, плащане и ресто.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://moetoresto.eu/">
+  <meta property="og:title" content="MoeToResto – EUR ⇄ BGN Calculator">
+  <meta property="og:description" content="Онлайн калкулатор за EUR ⇄ BGN с официалния фиксиран курс.">
+  <meta property="og:image" content="https://moetoresto.eu/og-image.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://moetoresto.eu/">
+  <meta property="twitter:title" content="MoeToResto – EUR ⇄ BGN Calculator">
+  <meta property="twitter:description" content="Онлайн калкулатор за EUR ⇄ BGN с официалния фиксиран курс.">
+  <meta property="twitter:image" content="https://moetoresto.eu/og-image.png">
+</head>
+
+<body>
+<div class="shell">
+
+  <!-- HEADER -->
+  <header>
+  <div class="brand">
+    <div class="logo-circle">€</div>
+
+    <div class="brand-text">
+      <div class="brand-text-title" data-i18n="appTitle">EUR ⇄ BGN Калкулатор</div>
+      <div class="brand-text-sub" data-i18n="appSubtitle">
+        Официален курс: 1 EUR = 1.95583 BGN
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <!-- LANG BUTTONS (EN FIRST NOW) -->
+    <button class="btn btn-lang" data-lang="en">🇪🇺 EN</button>
+    <button class="btn btn-lang active" data-lang="bg">🇧🇬 BG</button>
+
+    <!-- THEME TOGGLE -->
+    <button class="btn btn-theme" id="themeToggle">
+      <span id="themeIcon">🌙</span>
+      <span data-i18n="themeToggle">Тъмен режим</span>
+    </button>
+  </div>
+</header>
+
+
+  <main>
+
+    <section class="card">
+
+      <h2 class="card-title" data-i18n="calcTitle">Сметка, плащане и ресто</h2>
+      <p class="card-subtitle" data-i18n="calcIntro">
+        Попълнете сума за сметка и плащане. Рестото се изчислява автоматично.
+      </p>
+
+      <!-- SPLIT EUR / BGN HEADER -->
+      <div class="split-head">
+        <div class="head-pill">EUR</div>
+        <div class="head-pill">BGN</div>
+      </div>
+
+      <!-- BILL -->
+      <div class="operation-block">
+        <div class="op-label">
+          <span class="op-main" data-i18n="rowBill">Сметка</span>
+          <span class="op-sub" data-i18n="rowBillSub">(Дължима сума)</span>
+        </div>
+
+        <div class="op-inputs">
+          <div class="field">
+            <span class="prefix">€</span>
+            <input type="number" id="billEur" data-row="bill" data-currency="eur" step="any">
+          </div>
+          <div class="field">
+            <span class="prefix">лв.</span>
+            <input type="number" id="billBgn" data-row="bill" data-currency="bgn" step="any">
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYMENT -->
+      <div class="operation-block">
+        <div class="op-label">
+          <span class="op-main" data-i18n="rowPayment">Плащане</span>
+          <span class="op-sub" data-i18n="rowPaymentSub">(Реално платена сума)</span>
+        </div>
+
+        <div class="op-inputs">
+          <div class="field">
+            <span class="prefix">€</span>
+            <input type="number" id="payEur" data-row="payment" data-currency="eur" step="any">
+          </div>
+          <div class="field">
+            <span class="prefix">лв.</span>
+            <input type="number" id="payBgn" data-row="payment" data-currency="bgn" step="any">
+          </div>
+        </div>
+      </div>
+
+      <!-- BALANCE -->
+      <div class="operation-block">
+        <div class="op-label">
+          <span class="op-main" data-i18n="rowBalance">Ресто</span>
+          <span class="op-sub" data-i18n="rowBalanceSub">(Плащане − Сметка = Ресто)</span>
+        </div>
+
+        <div class="op-inputs">
+          <div class="field">
+            <span class="prefix">€</span>
+            <input type="text" id="balEur" readonly>
+          </div>
+          <div class="field">
+            <span class="prefix">лв.</span>
+            <input type="text" id="balBgn" readonly>
+          </div>
+        </div>
+
+        <div id="changeWarning" class="change-warning" style="display:none;"></div>
+      </div>
+
+      <div class="error-text" id="errorText" data-i18n="errorText">
+        Моля, въведете валидни числа.
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="info-title" data-i18n="rulesTitle">Правила за закръгляване и фиксиран курс</div>
+
+      <div class="info-body" data-i18n="rulesBody">
+        Официалният курс не се закръглява…
+      </div>
+
+      <div class="hint">
+        <span data-i18n="rulesNote"><strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.</span>
+        <ul>
+          <li data-i18n="rule1">Сумите се закръгляват до 2 знака.</li>
+          <li data-i18n="rule2">Третият знак < 5 → вторият остава същият.</li>
+          <li data-i18n="rule3">Третият знак ≥ 5 → вторият се увеличава с 1.</li>
+          <li data-i18n="rule4">При суми в лева е възможна разлика от 0.01 лв. поради закръгляване.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class= "footer-note" data-i18n="footerCombined">MoeToResto · EUR ⇄ BGN помощ за преходния период · Не заменя официални разяснения.</div>
+  </footer>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html><!DOCTYPE html>
 <html lang="bg" data-theme="system">
 <head>
   <meta charset="UTF-8" />
