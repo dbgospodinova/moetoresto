@@ -134,37 +134,23 @@ function recalc() {
   let payEur  = getNumber(payEurEl.value);
   let payBgn  = getNumber(payBgnEl.value);
 
-  /* -----------------------------------------
-     FIX: If user clears a field → reset all
-  ----------------------------------------- */
-  if (lastEdited.bill === "eur" && billEur === null) {
+  // ------------------------
+  // CLEANUP: clear paired fields
+  // ------------------------
+  if (billEurEl.value === "" || billBgnEl.value === "") {
+    billEurEl.value = "";
     billBgnEl.value = "";
     balEurEl.value = "";
     balBgnEl.value = "";
-    return;
   }
-
-  if (lastEdited.bill === "bgn" && billBgn === null) {
-    billEurEl.value = "";
-    balEurEl.value = "";
-    balBgnEl.value = "";
-    return;
-  }
-
-  if (lastEdited.payment === "eur" && payEur === null) {
+  
+  if (payEurEl.value === "" || payBgnEl.value === "") {
+    payEurEl.value = "";
     payBgnEl.value = "";
     balEurEl.value = "";
     balBgnEl.value = "";
-    return;
   }
-
-  if (lastEdited.payment === "bgn" && payBgn === null) {
-    payEurEl.value = "";
-    balEurEl.value = "";
-    balBgnEl.value = "";
-    return;
-  }
-
+  
   /* ------------------------
      SYNC EUR ↔ BGN
   ------------------------- */
