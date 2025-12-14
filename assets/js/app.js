@@ -1,4 +1,5 @@
 const RATE = 1.95583;
+let inputErrorActive = false;
 
 /* ========================
    TRANSLATIONS
@@ -121,8 +122,10 @@ function getNumber(v) {
 function showInputError() {
   const errorEl = document.getElementById("errorText");
   if (!errorEl) return;
+
   errorEl.textContent = translations[currentLang].inputError;
   errorEl.style.display = "block";
+  inputErrorActive = true;
 }
 
 function blockInvalidKeys(e) {
@@ -187,7 +190,11 @@ function recalc() {
   const warningEl = document.getElementById("changeWarning");
   const errorEl   = document.getElementById("errorText");
 
-  errorEl.style.display = "none";
+  if (inputErrorActive) {
+     return;
+   }
+   errorEl.style.display = "none";
+
   warningEl.style.display = "none";
   balEurEl.parentElement.classList.remove("negative");
   balBgnEl.parentElement.classList.remove("negative");
@@ -252,6 +259,7 @@ document.querySelectorAll("input[data-row]").forEach(input => {
   input.addEventListener("paste", blockInvalidPaste);
 
   input.addEventListener("input", e => {
+    inputErrorActive = false;
     input.value = cleanInputValue(input.value);
     lastEdited[e.target.dataset.row] = e.target.dataset.currency;
     recalc();
