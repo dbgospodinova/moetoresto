@@ -27,12 +27,12 @@ const translations = {
     rulesNote:
       "<strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.",
     rule1: "Сумите се закръгляват до 2 знака.",
-    rule2: "Третият знак &lt; 5 → вторият остава същият.",
+    rule2: "Третият знак < 5 → вторият остава същият.",
     rule3: "Третият знак ≥ 5 → вторият се увеличава с 1.",
-    rule4: "При суми в лева е възможна разлика от 0.01 ст. поради закръгляване.",
+    rule4: "При суми в лева е възможна разлика от 0.01 лв. поради закръгляване.",
 
-    footerLeft: "MoeToResto · EUR ⇄ BGN помощ за преходния период.",
-    footerRight: "Сайт за взаимопомощ · Не заменя официални разяснения.",
+    footerCombined:
+    "MoeToResto · EUR ⇄ BGN помощ за преходния период · Не заменя официални разяснения.",
 
     negativeChange: "Ресто е отрицателно. Платената сума не покрива сметката."
   },
@@ -63,12 +63,12 @@ const translations = {
     rulesNote:
       "<strong>Note:</strong> conversion uses the full rate 1.95583.",
     rule1: "Amounts are rounded to 2 decimals.",
-    rule2: "Third decimal &lt; 5 → second stays the same.",
+    rule2: "Third decimal < 5 → second stays the same.",
     rule3: "Third decimal ≥ 5 → second increases by 1.",
-    rule4: "BGN amounts may differ by 0.01 stotinki due to rounding.",
+    rule4: "BGN amounts may differ by 0.01 лв. due to rounding.",
 
-    footerLeft: "MoeToResto · EUR ⇄ BGN helper website for the transition period.",
-    footerRight: "Support site · Does not replace official explanations.",
+    footerCombined:
+    "MoeToResto · EUR ⇄ BGN helper website for the transition period · Does not replace official explanations.",
 
     negativeChange: "Change is negative. Payment does not cover the bill."
   }
@@ -83,21 +83,13 @@ let lastEdited = { bill: null, payment: null };
 function cleanInputValue(raw) {
   if (!raw) return "";
 
-
   raw = raw.replace(/-/g, "");
-
 
   const parts = raw.split(".");
   if (parts.length > 2) raw = parts[0] + "." + parts.slice(1).join("");
 
-
-
-
   const p = raw.split(".");
   if (p[1] && p[1].length > 2) p[1] = p[1].slice(0, 2);
-
-
-
 
   return p.join(".");
 }
@@ -124,7 +116,6 @@ function recalc() {
   const balEurEl  = document.getElementById("balEur");
   const balBgnEl  = document.getElementById("balBgn");
   const warningEl = document.getElementById("changeWarning");
-
 
   warningEl.style.display = "none";
   balEurEl.parentElement.classList.remove("negative");
@@ -181,7 +172,6 @@ function recalc() {
   if (lastEdited.bill === "bgn" && billBgn !== null) {
     billEurEl.value = roundHalfUp(billBgn / RATE).toFixed(2);
   }
-
 
   if (lastEdited.payment === "eur" && payEur !== null) {
     payBgnEl.value = roundHalfUp(payEur * RATE).toFixed(2);
@@ -270,5 +260,26 @@ function applyTranslations() {
 
     if (val.includes("<")) el.innerHTML = val;
     else el.textContent = val;
+  });
+
+  document.querySelectorAll(".btn-lang").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.lang === currentLang);
+  });
+
+  updateThemeLabel(document.documentElement.getAttribute("data-theme") || "light");
+}
+
+document.querySelectorAll(".btn-lang").forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentLang = btn.dataset.lang;
+    applyTranslations();
+    recalc();
+  });
 });
 
+/* ------------------------
+   INIT
+------------------------- */
+applyTheme(localStorage.getItem("theme") || "light");
+applyTranslations();
+recalc();
