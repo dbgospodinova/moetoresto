@@ -12,6 +12,7 @@ const translations = {
 
     rowBill: "Сметка",
     rowBillSub: "(Дължима сума)",
+    decimalExample: "Напр. 12.34",
 
     rowPayment: "Плащане",
     rowPaymentSub: "(Реално платена сума)",
@@ -48,6 +49,7 @@ const translations = {
 
     rowBill: "Bill",
     rowBillSub: "(Amount due)",
+    decimalExample: "e.g. 12.34",
 
     rowPayment: "Payment",
     rowPaymentSub: "(Amount paid)",
@@ -260,6 +262,14 @@ function applyTranslations() {
 
     if (val.includes("<")) el.innerHTML = val;
     else el.textContent = val;
+  });
+
+  // Translate placeholders
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    const val = dict[key];
+    if (!val) return;
+    el.placeholder = val;
   });
 
   document.querySelectorAll(".btn-lang").forEach(btn => {
