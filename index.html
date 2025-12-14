@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="bg" data-theme="system">
 <head>
@@ -5,9 +7,9 @@
   <title>MoeToResto - EUR ⇄ BGN Калкулатор</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css" />
-
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link href="assets/css/styles.css" rel="stylesheet">
+  
+  <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
@@ -30,7 +32,6 @@
   <meta property="twitter:title" content="MoeToResto – EUR ⇄ BGN Calculator">
   <meta property="twitter:description" content="Онлайн калкулатор за EUR ⇄ BGN с официалния фиксиран курс.">
   <meta property="twitter:image" content="https://moetoresto.eu/og-image.png">
-
 </head>
 
 <body>
@@ -88,11 +89,11 @@
         <div class="op-inputs">
           <div class="field">
             <span class="prefix">€</span>
-            <input type="text" id="billEur" data-row="bill" data-currency="eur" step="any">
+            <input type="number" id="billEur" data-row="bill" data-currency="eur" step="any">
           </div>
           <div class="field">
             <span class="prefix">лв.</span>
-            <input type="text" id="billBgn" data-row="bill" data-currency="bgn" step="any">
+            <input type="number" id="billBgn" data-row="bill" data-currency="bgn" step="any">
           </div>
         </div>
       </div>
@@ -107,11 +108,11 @@
         <div class="op-inputs">
           <div class="field">
             <span class="prefix">€</span>
-            <input type="text" id="payEur" data-row="payment" data-currency="eur" step="any">
+            <input type="number" id="payEur" data-row="payment" data-currency="eur" step="any">
           </div>
           <div class="field">
             <span class="prefix">лв.</span>
-            <input type="text" id="payBgn" data-row="payment" data-currency="bgn" step="any">
+            <input type="number" id="payBgn" data-row="payment" data-currency="bgn" step="any">
           </div>
         </div>
       </div>
