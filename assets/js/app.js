@@ -135,10 +135,6 @@ function recalc() {
   let payBgn  = getNumber(payBgnEl.value);
 
   // ------------------------
-  // CLEANUP: clear paired fields
-  // -----------------------
-
-  // ------------------------
   // CLEANUP: clear paired fields only if active field is cleared
   // ------------------------
   if (lastEdited.bill === "eur" && billEurEl.value === "") {
