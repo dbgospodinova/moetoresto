@@ -13,6 +13,7 @@ const translations = {
     rowBill: "Сметка",
     rowBillSub: "(Дължима сума)",
     decimalExample: "Напр. 12.34",
+    commaError: "Използвайте точка (.) вместо запетая.",
 
     rowPayment: "Плащане",
     rowPaymentSub: "(Реално платена сума)",
@@ -50,6 +51,7 @@ const translations = {
     rowBill: "Bill",
     rowBillSub: "(Amount due)",
     decimalExample: "e.g. 12.34",
+    commaError: "Please use dot (.) instead of comma.",
 
     rowPayment: "Payment",
     rowPaymentSub: "(Amount paid)",
@@ -110,6 +112,10 @@ function getNumber(v) {
 /* ------------------------
    RECALCULATE EVERYTHING
 ------------------------- */
+function hasComma(value) {
+  return typeof value === "string" && value.includes(",");
+}
+
 function recalc() {
   const billEurEl = document.getElementById("billEur");
   const billBgnEl = document.getElementById("billBgn");
@@ -118,6 +124,9 @@ function recalc() {
   const balEurEl  = document.getElementById("balEur");
   const balBgnEl  = document.getElementById("balBgn");
   const warningEl = document.getElementById("changeWarning");
+
+  const errorEl = document.getElementById("errorText");
+  errorEl.style.display = "none";
 
   warningEl.style.display = "none";
   balEurEl.parentElement.classList.remove("negative");
