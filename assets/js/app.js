@@ -62,7 +62,7 @@ const translations = {
 
     rulesTitle: "Rounding rules and fixed conversion rate",
     rulesBody:
-      "The official conversion rate must not be rounded. All amounts are converted using the full rate 1 EUR = 1.95583 BGN. Results are rounded to two decimal places.",",
+      "The official conversion rate must not be rounded. All amounts are converted using the full rate 1 EUR = 1.95583 BGN. Results are rounded to two decimal places.",
     rulesNote:
       "<strong>Note:</strong> conversion uses the full rate 1.95583.",
     rule1: "Amounts are rounded to 2 decimals.",
