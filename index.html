@@ -1,274 +1,175 @@
-const RATE = 1.95583;
-
-const translations = {
-  bg: {
-    appTitle: "EUR ⇄ BGN Калкулатор",
-    appSubtitle: "Официален курс: 1 EUR = 1.95583 BGN",
-
-    themeToggle: "Тъмен режим",
-
-    calcTitle: "Сметка, плащане и ресто",
-    calcIntro: "Попълнете сума за сметка и плащане. Рестото се изчислява автоматично.",
-
-    rowBill: "Сметка",
-    rowBillSub: "(Дължима сума)",
-
-    rowPayment: "Плащане",
-    rowPaymentSub: "(Реално платена сума)",
-
-    rowBalance: "Ресто",
-    rowBalanceSub: "(Плащане − Сметка = Ресто)",
-
-    errorText: "Моля, въведете валидни числа.",
-
-    rulesTitle: "Правила за закръгляване и фиксиран курс",
-    rulesBody:
-      "Официалният курс не се закръглява. Всички суми се преобразуват по пълния курс 1 EUR = 1.95583 BGN. Резултатите се закръгляват до два знака след десетичната запетая.",
-    rulesNote:
-      "<strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.",
-    rule1: "Сумите се закръгляват до 2 знака.",
-    rule2: "Третият знак &lt; 5 → вторият остава същият.",
-    rule3: "Третият знак ≥ 5 → вторият се увеличава с 1.",
-    rule4: "При суми в лева е възможна разлика от 0.01 ст. поради закръгляване.",
-
-    footerLeft: "MoeToResto · EUR ⇄ BGN помощ за преходния период.",
-    footerRight: "Сайт за взаимопомощ · Не заменя официални разяснения.",
-
-    negativeChange: "Ресто е отрицателно. Платената сума не покрива сметката."
-  },
-
-  en: {
-    appTitle: "EUR ⇄ BGN Calculator",
-    appSubtitle: "Official rate: 1 EUR = 1.95583 BGN",
-
-    themeToggle: "Dark mode",
-
-    calcTitle: "Bill, Payment and Change",
-    calcIntro: "Enter bill and payment amounts. Change is calculated automatically.",
-
-    rowBill: "Bill",
-    rowBillSub: "(Amount due)",
-
-    rowPayment: "Payment",
-    rowPaymentSub: "(Amount paid)",
-
-    rowBalance: "Change",
-    rowBalanceSub: "(Payment − Bill = Change)",
-
-    errorText: "Please enter valid numbers.",
-
-    rulesTitle: "Rounding rules and fixed conversion rate",
-    rulesBody:
-      "The official conversion rate must not be rounded. All amounts are converted using the full rate 1 EUR = 1.95583 BGN. Results are rounded to two decimal places.",
-    rulesNote:
-      "<strong>Note:</strong> conversion uses the full rate 1.95583.",
-    rule1: "Amounts are rounded to 2 decimals.",
-    rule2: "Third decimal &lt; 5 → second stays the same.",
-    rule3: "Third decimal ≥ 5 → second increases by 1.",
-    rule4: "BGN amounts may differ by 0.01 stotinki due to rounding.",
-
-    footerLeft: "MoeToResto · EUR ⇄ BGN helper website for the transition period.",
-    footerRight: "Support site · Does not replace official explanations.",
-
-    negativeChange: "Change is negative. Payment does not cover the bill."
-  }
-};
-
-let currentLang = "bg";
-let lastEdited = { bill: null, payment: null };
-
-/* ------------------------
-   CLEAN INPUT (no -, max 2 decimals)
-------------------------- */
-function cleanInputValue(raw) {
-  if (!raw) return "";
-
-
-  raw = raw.replace(/-/g, "");
-
-
-  const parts = raw.split(".");
-  if (parts.length > 2) raw = parts[0] + "." + parts.slice(1).join("");
 
 
 
+<!DOCTYPE html>
+<html lang="bg" data-theme="system">
+<head>
+  <meta charset="UTF-8" />
+  <title>MoeToResto - EUR ⇄ BGN Калкулатор</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+  
+  <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
 
-  const p = raw.split(".");
-  if (p[1] && p[1].length > 2) p[1] = p[1].slice(0, 2);
+  <!-- Primary Meta -->
+  <meta name="title" content="MoeToResto – EUR ⇄ BGN Calculator">
+  <meta name="description" content="Калкулатор за преходния период EUR ⇄ BGN с официалния фиксиран курс 1.95583. Сметка, плащане и ресто.">
 
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://moetoresto.eu/">
+  <meta property="og:title" content="MoeToResto – EUR ⇄ BGN Calculator">
+  <meta property="og:description" content="Онлайн калкулатор за EUR ⇄ BGN с официалния фиксиран курс.">
+  <meta property="og:image" content="https://moetoresto.eu/og-image.png">
 
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://moetoresto.eu/">
+  <meta property="twitter:title" content="MoeToResto – EUR ⇄ BGN Calculator">
+  <meta property="twitter:description" content="Онлайн калкулатор за EUR ⇄ BGN с официалния фиксиран курс.">
+  <meta property="twitter:image" content="https://moetoresto.eu/og-image.png">
+</head>
 
+<body>
+<div class="shell">
 
-  return p.join(".");
-}
+  <!-- HEADER -->
+  <header>
+  <div class="brand">
+    <div class="logo-circle">€</div>
 
-function roundHalfUp(v, digits = 2) {
-  const f = Math.pow(10, digits);
-  return Math.round((v + Number.EPSILON) * f) / f;
-}
+    <div class="brand-text">
+      <div class="brand-text-title" data-i18n="appTitle">EUR ⇄ BGN Калкулатор</div>
+      <div class="brand-text-sub" data-i18n="appSubtitle">
+        Официален курс: 1 EUR = 1.95583 BGN
+      </div>
+    </div>
+  </div>
 
-function getNumber(v) {
-  if (v === "" || v === null) return null;
-  const n = Number(v);
-  return Number.isFinite(n) ? n : null;
-}
+  <div class="controls">
+    <!-- LANG BUTTONS (EN FIRST NOW) -->
+    <button class="btn btn-lang" data-lang="en">🇪🇺 EN</button>
+    <button class="btn btn-lang active" data-lang="bg">🇧🇬 BG</button>
 
-/* ------------------------
-   RECALCULATE EVERYTHING
-------------------------- */
-function recalc() {
-  const billEurEl = document.getElementById("billEur");
-  const billBgnEl = document.getElementById("billBgn");
-  const payEurEl  = document.getElementById("payEur");
-  const payBgnEl  = document.getElementById("payBgn");
-  const balEurEl  = document.getElementById("balEur");
-  const balBgnEl  = document.getElementById("balBgn");
-  const warningEl = document.getElementById("changeWarning");
-
-
-  warningEl.style.display = "none";
-  balEurEl.parentElement.classList.remove("negative");
-  balBgnEl.parentElement.classList.remove("negative");
-
-  // Clean before reading
-  billEurEl.value = cleanInputValue(billEurEl.value);
-  billBgnEl.value = cleanInputValue(billBgnEl.value);
-  payEurEl.value  = cleanInputValue(payEurEl.value);
-  payBgnEl.value  = cleanInputValue(payBgnEl.value);
-
-  let billEur = getNumber(billEurEl.value);
-  let billBgn = getNumber(billBgnEl.value);
-  let payEur  = getNumber(payEurEl.value);
-  let payBgn  = getNumber(payBgnEl.value);
-
-  /* -----------------------------------------
-     FIX: If user clears a field → reset all
-  ----------------------------------------- */
-  if (lastEdited.bill === "eur" && billEur === null) {
-    billBgnEl.value = "";
-    balEurEl.value = "";
-    balBgnEl.value = "";
-    return;
-  }
-
-  if (lastEdited.bill === "bgn" && billBgn === null) {
-    billEurEl.value = "";
-    balEurEl.value = "";
-    balBgnEl.value = "";
-    return;
-  }
-
-  if (lastEdited.payment === "eur" && payEur === null) {
-    payBgnEl.value = "";
-    balEurEl.value = "";
-    balBgnEl.value = "";
-    return;
-  }
-
-  if (lastEdited.payment === "bgn" && payBgn === null) {
-    payEurEl.value = "";
-    balEurEl.value = "";
-    balBgnEl.value = "";
-    return;
-  }
-
-  /* ------------------------
-     SYNC EUR ↔ BGN
-  ------------------------- */
-  if (lastEdited.bill === "eur" && billEur !== null) {
-    billBgnEl.value = roundHalfUp(billEur * RATE).toFixed(2);
-  }
-  if (lastEdited.bill === "bgn" && billBgn !== null) {
-    billEurEl.value = roundHalfUp(billBgn / RATE).toFixed(2);
-  }
+    <!-- THEME TOGGLE -->
+    <button class="btn btn-theme" id="themeToggle">
+      <span id="themeIcon">🌙</span>
+      <span data-i18n="themeToggle">Тъмен режим</span>
+    </button>
+  </div>
+</header>
 
 
-  if (lastEdited.payment === "eur" && payEur !== null) {
-    payBgnEl.value = roundHalfUp(payEur * RATE).toFixed(2);
-  }
-  if (lastEdited.payment === "bgn" && payBgn !== null) {
-    payEurEl.value = roundHalfUp(payBgn / RATE).toFixed(2);
-  }
+  <main>
 
-  /* ------------------------
-     CALCULATE BALANCE
-  ------------------------- */
-  billEur = getNumber(billEurEl.value);
-  payEur  = getNumber(payEurEl.value);
+    <section class="card">
 
-  if (billEur === null || payEur === null) {
-    balEurEl.value = "";
-    balBgnEl.value = "";
-    return;
-  }
+      <h2 class="card-title" data-i18n="calcTitle">Сметка, плащане и ресто</h2>
+      <p class="card-subtitle" data-i18n="calcIntro">
+        Попълнете сума за сметка и плащане. Рестото се изчислява автоматично.
+      </p>
 
-  const balEur = roundHalfUp(payEur - billEur);
-  const balBgn = roundHalfUp(balEur * RATE);
+      <!-- SPLIT EUR / BGN HEADER -->
+      <div class="split-head">
+        <div class="head-pill">EUR</div>
+        <div class="head-pill">BGN</div>
+      </div>
 
-  balEurEl.value = balEur.toFixed(2);
-  balBgnEl.value = balBgn.toFixed(2);
+      <!-- BILL -->
+      <div class="operation-block">
+        <div class="op-label">
+          <span class="op-main" data-i18n="rowBill">Сметка</span>
+          <span class="op-sub" data-i18n="rowBillSub">(Дължима сума)</span>
+        </div>
 
-  if (balEur < 0) {
-    warningEl.textContent = translations[currentLang].negativeChange;
-    warningEl.style.display = "block";
-    balEurEl.parentElement.classList.add("negative");
-    balBgnEl.parentElement.classList.add("negative");
-  }
-}
+        <div class="op-inputs">
+          <div class="field">
+            <span class="prefix">€</span>
+            <input type="number" id="billEur" data-row="bill" data-currency="eur" step="any">
+          </div>
+          <div class="field">
+            <span class="prefix">лв.</span>
+            <input type="number" id="billBgn" data-row="bill" data-currency="bgn" step="any">
+          </div>
+        </div>
+      </div>
 
-/* ------------------------
-   INPUT LISTENERS
-------------------------- */
-document.querySelectorAll("input[data-row]").forEach(input => {
-  input.addEventListener("input", e => {
-    input.value = cleanInputValue(input.value);
-    lastEdited[e.target.dataset.row] = e.target.dataset.currency;
-    recalc();
-  });
-});
+      <!-- PAYMENT -->
+      <div class="operation-block">
+        <div class="op-label">
+          <span class="op-main" data-i18n="rowPayment">Плащане</span>
+          <span class="op-sub" data-i18n="rowPaymentSub">(Реално платена сума)</span>
+        </div>
 
-/* ------------------------
-   THEME LOGIC
-------------------------- */
-function updateThemeLabel(theme) {
-  const label = document.querySelector('#themeToggle span[data-i18n="themeToggle"]');
-  const icon  = document.getElementById("themeIcon");
+        <div class="op-inputs">
+          <div class="field">
+            <span class="prefix">€</span>
+            <input type="number" id="payEur" data-row="payment" data-currency="eur" step="any">
+          </div>
+          <div class="field">
+            <span class="prefix">лв.</span>
+            <input type="number" id="payBgn" data-row="payment" data-currency="bgn" step="any">
+          </div>
+        </div>
+      </div>
 
-  if (!label || !icon) return;
+      <!-- BALANCE -->
+      <div class="operation-block">
+        <div class="op-label">
+          <span class="op-main" data-i18n="rowBalance">Ресто</span>
+          <span class="op-sub" data-i18n="rowBalanceSub">(Плащане − Сметка = Ресто)</span>
+        </div>
 
-  if (theme === "dark") {
-    icon.textContent = "☀️";
-    label.textContent = currentLang === "bg" ? "Светъл режим" : "Light mode";
-  } else {
-    icon.textContent = "🌙";
-    label.textContent = currentLang === "bg" ? "Тъмен режим" : "Dark mode";
-  }
-}
+        <div class="op-inputs">
+          <div class="field">
+            <span class="prefix">€</span>
+            <input type="text" id="balEur" readonly>
+          </div>
+          <div class="field">
+            <span class="prefix">лв.</span>
+            <input type="text" id="balBgn" readonly>
+          </div>
+        </div>
 
-function applyTheme(theme) {
-  document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("theme", theme);
-  updateThemeLabel(theme);
-}
+        <div id="changeWarning" class="change-warning" style="display:none;"></div>
+      </div>
 
-document.getElementById("themeToggle").addEventListener("click", () => {
-  const current = document.documentElement.getAttribute("data-theme") || "light";
-  const next = current === "dark" ? "light" : "dark";
-  applyTheme(next);
-});
+      <div class="error-text" id="errorText" data-i18n="errorText">
+        Моля, въведете валидни числа.
+      </div>
+    </section>
 
-/* ------------------------
-   LANGUAGE HANDLING
-------------------------- */
-function applyTranslations() {
-  const dict = translations[currentLang];
+    <section class="card">
+      <div class="info-title" data-i18n="rulesTitle">Правила за закръгляване и фиксиран курс</div>
 
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.dataset.i18n;
-    const val = dict[key];
-    if (!val) return;
+      <div class="info-body" data-i18n="rulesBody">
+        Официалният курс не се закръглява…
+      </div>
 
-    if (val.includes("<")) el.innerHTML = val;
-    else el.textContent = val;
-  }
-});
+      <div class="hint">
+        <span data-i18n="rulesNote"><strong>Забележка:</strong> превалутирането използва пълния курс 1.95583.</span>
+        <ul>
+          <li data-i18n="rule1">Сумите се закръгляват до 2 знака.</li>
+          <li data-i18n="rule2">Третият знак < 5 → вторият остава същият.</li>
+          <li data-i18n="rule3">Третият знак ≥ 5 → вторият се увеличава с 1.</li>
+          <li data-i18n="rule4">При суми в лева е възможна разлика от 0.01 лв. поради закръгляване.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class= "footer-note" data-i18n="footerCombined">MoeToResto · EUR ⇄ BGN помощ за преходния период · Не заменя официални разяснения.</div>
+  </footer>
+
+</div>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
