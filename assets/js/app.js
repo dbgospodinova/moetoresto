@@ -129,6 +129,11 @@ function showInputError() {
 }
 
 function blockInvalidKeys(e) {
+  // Allow Ctrl+V / Cmd+V (paste)
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "v") {
+    return;
+  }
+
   const allowedControlKeys = [
     "Backspace",
     "Delete",
@@ -139,21 +144,13 @@ function blockInvalidKeys(e) {
     "End"
   ];
 
-  // allow control/navigation keys
   if (allowedControlKeys.includes(e.key)) return;
 
-  // allow digits
   if (e.key >= "0" && e.key <= "9") return;
-
-  // allow dot
   if (e.key === ".") return;
 
-  // block everything else (comma, letters, symbols, minus, space)
   e.preventDefault();
-
-  if (e.key === ",") {
-    showInputError();
-  }
+  showInputError();
 }
 
 function blockInvalidPaste(e) {
@@ -161,21 +158,14 @@ function blockInvalidPaste(e) {
 
   if (!pasted) return;
 
-  // Only digits and dot
-  if (!/^[0-9.]+$/.test(pasted)) {
+  if (!/^[0-9.]+$/.test(pasted) || (pasted.match(/\./g) || []).length > 1) {
     e.preventDefault();
     showInputError();
-    return;
-  }
 
-  // Only ONE dot allowed
-  const dotCount = (pasted.match(/\./g) || []).length;
-  if (dotCount > 1) {
-    e.preventDefault();
-    showInputError();
+    // Ensure focus stays (Firefox)
+    e.target.focus();
   }
 }
-
 
 /* ========================
    RECALCULATION
