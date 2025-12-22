@@ -91,7 +91,13 @@ header {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2563eb, #facc15);
+  background: linear-gradient(
+    110deg,
+    #2563eb 0%,
+    #2563eb 50%,
+    #fde047 50%,
+    #fde047 100%
+  );
   color: #ffffff;
   display: flex;
   align-items: center;
