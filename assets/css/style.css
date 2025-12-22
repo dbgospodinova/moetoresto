@@ -92,10 +92,10 @@ header {
   height: 44px;
   border-radius: 50%;
   background: linear-gradient(
-    110deg,
+    115deg,
     #2563eb 0%,
-    #2563eb 50%,
-    #fde047 50%,
+    #2563eb 55%,
+    #fde047 75%,
     #fde047 100%
   );
   color: #ffffff;
